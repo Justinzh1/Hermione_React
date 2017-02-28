@@ -34,7 +34,6 @@ class Home extends React.Component {
               <h1> Students </h1>
               <p> Watch lectures </p>
               <p> Search concepts </p>
-              <p> Get ahead </p>
               <StudentButton />
             </div>
             <div className="chevron">
@@ -45,17 +44,18 @@ class Home extends React.Component {
                 </video>
               </div>
             </div>
+            
             <div className="chevron-blank"></div>
             <div className="title professors float-right">
               <h1> Professors </h1>
-              <p> Manage classes </p>
-              <p> Post videos </p>
+              <p> Upload Lectures </p>
               <p> Computer Vision </p>
               <ProfessorButton />
             </div>
           </div>
          
         </div>
+        
       </div>
     );
   }

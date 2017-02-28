@@ -28,7 +28,7 @@ class Header extends React.Component {
     return (
       <div className="container navbar">
         <ul className="list-inline">
-          <li><IndexLink to="/">Hermione</IndexLink></li>
+          <li className="logo"><IndexLink to="/">Hermione</IndexLink></li>
         </ul>
         {rightNav}
       </div>

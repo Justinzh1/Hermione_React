@@ -39,6 +39,11 @@ a {
   color: black;
 }
 
+.logo {
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
 .list-inline {
   display: inline-block;
   padding-left: 0;
@@ -94,11 +99,11 @@ a {
 .chevron-blank {
   display: inline-block;
   position: absolute;
-  top: 39px;
+  top: 40px;
   left: 50%;
   background-color:white;
   width: 40px;
-  height: 305px;
+  height: 300px;
   -webkit-transform: skew(-10deg) translateX(-50%);
      -moz-transform: skew(-10deg) translateX(-50%);
        -o-transform: skew(-10deg) translateX(-50%);
@@ -109,9 +114,9 @@ a {
   background-color: green;
   width: calc(60% - 100px);
   height: 300px;
-  -webkit-transform: skew(-10deg);
-     -moz-transform: skew(-10deg);
-       -o-transform: skew(-10deg);
+  -webkit-transform: skew(0deg);
+     -moz-transform: skew(0deg);
+       -o-transform: skew(0deg);
   overflow: hidden;
 }
 
@@ -124,6 +129,8 @@ a {
 .title {
   position: relative;
   display: inline-block;
+  vertical-align: top;
+  text-align: center;
 }
 
 .title h1 {
@@ -173,7 +180,7 @@ a {
   left: 0;
   z-index: 1;
   display: inline-block;
-  width: 80vw;
+  width: 50vw;
   height: auto;
 }
 
