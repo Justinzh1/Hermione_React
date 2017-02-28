@@ -20,7 +20,7 @@ class Header extends React.Component {
           <li><a href="#" onClick={this.handleLogout.bind(this)}>Logout</a></li>
       </ul>
     ) : (
-      <ul className="list-inline float-right">
+      <ul className="list-inline float-right nav-right">
           <li><Link to="/login">Log in</Link></li>
           <li><Link to="/signup">Sign up</Link></li>
       </ul>
