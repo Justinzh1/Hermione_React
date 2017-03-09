@@ -17,10 +17,22 @@ p {
 }
 
 footer {
-  position: absolute;
+  display: inline-block;
+  width: 100%;
+  color: white;
+  background-color: rgba(0,0,0,0.85);
+  margin-top: 30px;
   height: 44px;
   bottom: 0;
   padding: 0 30px;
+  font-family: 'lato';
+  font-weight: 300;
+}
+
+footer p {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 label {
@@ -41,6 +53,30 @@ form button[type="submit"] {
 a {
   text-decoration: none;
   color: black;
+}
+
+.rosegarden:hover {
+  background-color: #EE1F60;
+  border: 2px solid #EE1F60;
+  color: white;
+}
+
+.goldengate:hover {
+  background-color: #ED4E33;
+  border: 2px solid #ED4E33;
+  color: white;
+}
+
+.laplane:hover {
+  background-color: #00A598;
+  border: 2px solid #00A598;
+  color: white;
+}
+
+.lawrence:hover {
+  background-color: #00B0DA;
+  border: 2px solid #00B0DA;
+  color: white;
 }
 
 .logo {
@@ -102,7 +138,6 @@ a {
 }
 
 .video-container {
-  /*padding: 40px 80px;*/
   width: 100%;
   text-align: center;
   position: relative;
@@ -180,37 +215,47 @@ a {
   left: 0;
   z-index: 1;
   display: inline-block;
-  width: 130vw;
+  width: 150vw;
   height: auto;
-  min-height: 600px;
+  min-height: 650px;
 }
 
 .button-container {
-  float: left;
-  position: relative;
-  bottom: 10em;
-  z-index: 10;
   padding: 35px;
+  background-color: rgba(0,0,0,0.6);
+  min-width: 300px;
+  width: 50%;
+  color: white;
+  position: relative;
+  z-index: 5;
+  text-align: left;
 }
 
 .button-info {
   margin-bottom: 10px;
-  width: 450px;
 }
 
 .button {
   font-family: 'lato';
+  font-size: 16px;
   text-transform: uppercase;
-  border: 2px solid black;
+  border: 2px solid white;
   padding: 5px 10px;
   width: 100px;
   text-align: center;
   display: inline-block;
-  margin-right: 40px;
+  margin-right: 20px;
 }
 
-.button:hover {
-  background-color: black;
+.student:hover {
+  background-color: #FDB515;
+  border: 2px solid #FDB515;
+  color: white;
+}
+
+.professor:hover {
+  background-color: #00B0DA;
+  border: 2px solid #00B0DA;
   color: white;
 }
 
@@ -241,29 +286,44 @@ a {
 
 .class-list-item {
   font-family: 'Lato';
-  font-weight: 300;
   font-size: 1em;
   text-align: center;
   display: inline-block;
-  background-color: black;
+  border: 2px solid white;
   color: white;
   position: relative;
   z-index: 11;
-  padding: 8px 8px;
+  padding: 5px 15px;
   width: auto;
   text-align: center;
   display: inline-block;
-  margin-right: 10px;
+  margin-right: 30px;
+  margin-bottom: 20px;
 }
 
 .class-list-container {
+  background-color: rgba(50,50,50,0.4);
   position: relative;
   left: 0;
-  width: 80%;
+  min-width: 300px;
+  width: 50%;
   height: auto;
   min-height: 50px;
-  padding: 30px;
+  padding: 35px;
+  padding-bottom: 15px;
+  padding-top: 0;
   text-align: left;
+  /*display: inline-block;*/
+  float:left;
+  color: white;
+}
+
+.class-list-container h1 {
+  margin-top: 35px;
+  padding: 0;
+  font-style: "Lato";
+  font-weight: 300;
+  font-size: 16px;
 }
 
 .top-container {
@@ -273,11 +333,102 @@ a {
 }
 
 .video-header-container {
-  background-color: rgba(0,0,0,0.8);
+  background-color: rgba(0,0,0,0.825);
   width: 100vw;
   height: auto;
   padding-bottom: 20px;
   min-height: 150px;
   display: inline-block;
+  left: 0;
   top: 0px;
+}
+
+.contact-container {
+  padding: 40px 35px;
+  background-color: rgba(150,150,150,0.3);
+  min-width: 300px;
+  width: 50%;
+  color: white;
+  position: relative;
+  z-index: 5;
+  text-align: left;
+  float:left;
+  display: inline-block;
+}
+
+.sponsors-container {
+  width: 100%;
+  height: auto;
+  min-height: 300px;
+  text-align: center;
+  padding-bottom: 20px;
+}
+
+.sponsor {
+  display: inline-block;
+  width: 200px;
+  height: auto;
+  margin: 0 50px;
+  vertical-align: top;
+  padding-top: 60px;
+}
+
+#cal {
+  position: relative;
+  transform: translateY(75%);
+}
+.info-container {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  padding-bottom: 35px;
+}
+
+.info-container h1 {
+  margin: 0;
+}
+
+.info-header {
+  text-align: center;
+  font-family: "Playfair";
+}
+
+.info-col {
+  display: inline-block;
+  width: 20%;
+  min-width: 250px;
+  text-align: left;
+  vertical-align: top;
+  padding: 30px;
+  color: white;
+  margin: 0 10px;
+  margin-bottom: 20px;
+}
+
+.underline {
+  border-bottom: 2px solid white;
+}
+
+.info-content {
+  padding-top: 15px;
+  font-size: 16px;
+  font-family: 'lato';
+}
+
+#about {
+  background-color: rgba(0,0,0,0.9);
+}
+
+#mission {
+  background-color: rgba(0,0,0,0.85);
+}
+
+#contact {
+  background-color: rgba(0,0,0,0.8);
+}
+
+@media (max-width: 600px) {
+  .class-list-container {
+    display: none;
+  }
 }

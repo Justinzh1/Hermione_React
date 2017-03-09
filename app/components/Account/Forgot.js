@@ -15,7 +15,7 @@ class Forgot extends React.Component {
 
   handleForgot(event) {
     event.preventDefault();
-    this.props.dispatch(forgotPassword(this.state.email));
+    this.props.login(this.state.email);
   }
 
   render() {
@@ -41,4 +41,10 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(Forgot);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    dispatch: dispatch
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Forgot);

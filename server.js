@@ -26,6 +26,7 @@ require('babel-polyfill');
 
 // Models
 var User = require('./models/User');
+var Course = require('./models/Course');
 
 // Controllers
 var userController = require('./controllers/user');
@@ -39,7 +40,12 @@ var app = express();
 
 var compiler = webpack(config);
 
-mongoose.connect(process.env.MONGODB);
+var dbURI = 'mongodb://localhost/Hermione';
+
+if (process.env.NODE_ENV == 'production') {
+    mongoose.connect(process.env.MONGODB);
+}
+mongoose.connect(dbURI);
 mongoose.connection.on('error', function() {
   console.log('MongoDB Connection Error. Please make sure that MongoDB is running.');
   process.exit(1);
@@ -53,7 +59,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(expressValidator());
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 app.use("/images", express.static(__dirname + '/images'));
 
 app.use(function(req, res, next) {
@@ -84,6 +89,7 @@ if (app.get('env') === 'development') {
   }));
   app.use(require('webpack-hot-middleware')(compiler));
 }
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.post('/contact', contactController.contactPost);
 app.put('/account', userController.ensureAuthenticated, userController.accountPut);

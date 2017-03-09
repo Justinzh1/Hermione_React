@@ -18,6 +18,7 @@ class Header extends React.Component {
           </li>
           <li><Link to="/account">My Account</Link></li>
           <li><a href="#" onClick={this.handleLogout.bind(this)}>Logout</a></li>
+          <li><Link to="/dashboard">Dashboard</Link></li>
       </ul>
     ) : (
       <ul className="list-inline float-right nav-right">

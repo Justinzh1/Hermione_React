@@ -11,6 +11,7 @@ var schemaOptions = {
 
 var userSchema = new mongoose.Schema({
   name: String,
+  professor: Boolean,
   email: { type: String, unique: true},
   password: String,
   passwordResetToken: String,
@@ -23,7 +24,8 @@ var userSchema = new mongoose.Schema({
   twitter: String,
   google: String,
   github: String,
-  vk: String
+  vk: String,
+  enrolled: [{code: String}]
 }, schemaOptions);
 
 userSchema.pre('save', function(next) {

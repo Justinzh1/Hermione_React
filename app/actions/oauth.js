@@ -8,7 +8,7 @@ import { browserHistory } from 'react-router';
 export function googleLogin() {
   const google = {
     url: 'http://localhost:3000/auth/google',
-    clientId: '814958990796-p1centjebv1k0htp3am05tfg5k10nl0k.apps.googleusercontent.com',
+    clientId: '1084556350968-3qrqu3fqj2seestj3gt5ohf7d8qt4ph1.apps.googleusercontent.com',
     redirectUri: 'http://localhost:3000/auth/google/callback',
     authorizationUrl: 'https://accounts.google.com/o/oauth2/auth',
     scope: 'openid profile email',
@@ -213,4 +213,3 @@ function closePopup({ window, interval }) {
     resolve();
   });
 }
-
