@@ -55,6 +55,68 @@ a {
   color: black;
 }
 
+/*
+ * Generics 
+ * 
+ */
+
+ .material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;  /* Preferred icon size */
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
+
+.align-center {
+  text-align: center;
+}
+
+.sub-info {
+  color: black;
+  font-family: 'roboto';
+  font-weight: 200;
+}
+
+.inline {
+  display: inline-block;
+}
+
+.divider {
+  position: relative;
+  height: 100%;
+  min-height: 40px;
+  top: -2px;
+  width: 2px;
+  background-color: white;
+  display: inline-block;
+  margin: 0 15px;
+}
+
+ .container {
+  padding: 10px;
+ }
+
+.left-right-container {
+  padding: 0 15px;
+}
+
 .rosegarden:hover {
   background-color: #EE1F60;
   border: 2px solid #EE1F60;
@@ -117,6 +179,12 @@ a {
 
 .float-right {
   float: right;
+}
+
+.center {
+  position: relative;
+  top: 50%;
+  transform: translateY(-10%);
 }
 
 .navbar {

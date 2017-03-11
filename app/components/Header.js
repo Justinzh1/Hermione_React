@@ -11,7 +11,7 @@ class Header extends React.Component {
 
   render() {
     const rightNav = this.props.token ? (
-      <ul className="list-inline">
+      <ul className="list-inline float-right center">
           <li>
             <img className="avatar" src={this.props.user.picture || this.props.user.gravatar}/>
             {' '}{this.props.user.name || this.props.user.email || this.props.user.id}{' '}
@@ -21,7 +21,7 @@ class Header extends React.Component {
           <li><Link to="/dashboard">Dashboard</Link></li>
       </ul>
     ) : (
-      <ul className="list-inline float-right nav-right">
+      <ul className="list-inline nav-right">
           <li><Link to="/login">Log in</Link></li>
           <li><Link to="/signup">Sign up</Link></li>
       </ul>
