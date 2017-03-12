@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import Messages from './Messages';
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 
 class StudentButton extends React.Component {
   render() {
@@ -107,6 +108,7 @@ class Home extends React.Component {
         </div>
 
         <div className="info-container">
+
           <div className="info-col" id="about">
             <div className="info-header">
               <h1> <span className="underline"> About </span> </h1>
@@ -116,7 +118,7 @@ class Home extends React.Component {
             </div>
           </div>
 
-          <div className="info-col" id="mission">
+          <div className="info-col" id="about">
             <div className="info-header">
               <h1> <span className="underline"> Mission </span> </h1>
             </div>
@@ -125,7 +127,7 @@ class Home extends React.Component {
             </div>
           </div>
 
-          <div className="info-col" id="contact">
+          <div className="info-col" id="about">
             <div className="info-header">
               <h1> <span className="underline"> Contact </span> </h1>
             </div>

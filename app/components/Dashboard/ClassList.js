@@ -78,12 +78,12 @@ class ClassCard extends React.Component {
     return (
       <Card 
         style={Object.assign(cardStyle, { backgroundColor: this.props.bg })}
+        onClick={() => this.clickSelected()}
         >
         <CardHeader 
           title={this.props.course.title}
           titleStyle={cardHeaderStyle}
           titleColor={"black"}
-          onClick={() => this.clickSelected()}
         />
         <ClassInfo />
       </Card>
