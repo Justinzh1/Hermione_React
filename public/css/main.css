@@ -5,7 +5,7 @@ html {
 
 body {
   margin: 0;
-  font-family: "PT sans";
+  font-family: "Roboto";
   overflow-x: hidden;
 }
 
@@ -15,6 +15,15 @@ ul, ol {
 
 p {
   margin: 0;
+}
+
+:focus {
+  outline: none;
+  border: none;
+}
+
+button:focus {
+  outline: none;
 }
 
 footer {
@@ -209,7 +218,12 @@ a {
   transform: translateY(15%);
 }
 
-.nav-right p {
+.info {
+  position: absolute;
+  top: 0;
+  z-index: 10;
+  width: 100vw;
+  padding: 20px;
 }
 
 .video-container {
@@ -223,10 +237,16 @@ a {
   width: 100vw;
   height: 600px;
   overflow: hidden;
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  left: 0;
 }
 
 .video-bg-file {
-  width: 100%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
   height: auto;
 }
 
@@ -285,16 +305,6 @@ a {
   float: right;
 }
 
-.video-bg-file {
-  top: 0;
-  left: 0;
-  z-index: 1;
-  display: inline-block;
-  width: 150vw;
-  height: auto;
-  min-height: 650px;
-}
-
 .button-container {
   padding: 35px;
   background-color: rgba(0,0,0,0.6);
@@ -316,10 +326,18 @@ a {
   text-transform: uppercase;
   border: 2px solid white;
   padding: 5px 10px;
-  width: 100px;
+  width: 150px;
   text-align: center;
   display: inline-block;
   margin-right: 20px;
+}
+
+.button p {
+  color: white;
+}
+
+.button {
+  color: white;
 }
 
 .student:hover {
@@ -335,27 +353,32 @@ a {
 }
 
 .video-header {
+  background-color: rgba(0,0,0,.8);
   font-size: 1.5em;
-  font-family: 'Playfair Display';
   text-align: left;
-  padding: 0 30px;
-  width: auto;
-  max-width: 800px;
-  position: relative;
-  z-index: 5;
-  color: white;
+  padding: 20px 30px;
+  margin-bottom: 20px;
 }
 
 .video-header h1 {
-  margin-bottom: 0;
+  font-family: 'Playfair Display';
+  margin-bottom: 5px;
+  margin-top: 0;
   padding-bottom: 0;
   line-height: 1em;
+  color: white;
+}
+
+.video-subtitle {
+  color: white;
+  font-family: 'lato';
+  text-transform: uppercase;
 }
 
 .video-header p {
   margin-top: 10px;
-  font-family: 'lato';
-  text-transform: uppercase;
+  color: white;
+  font-family:"roboto";
   font-weight: 300;
 }
 
@@ -437,6 +460,7 @@ a {
   min-height: 300px;
   text-align: center;
   padding-bottom: 20px;
+  margin-top: 600px;
 }
 
 .sponsor {
@@ -457,6 +481,7 @@ a {
   width: 100%;
   text-align: center;
   padding-bottom: 35px;
+  padding: 0;
 }
 
 .info-container h1 {
@@ -465,7 +490,10 @@ a {
 
 .info-header {
   text-align: center;
-  font-family: "Playfair";
+}
+
+.info-header h1 { 
+  color: white;
 }
 
 .info-col {

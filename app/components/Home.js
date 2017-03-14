@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux'
 import Messages from './Messages';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import {Grid, Row, Jumbotron, Col, Button} from 'react-bootstrap/lib';
 
 class StudentButton extends React.Component {
   render() {
@@ -75,28 +76,34 @@ class Home extends React.Component {
                 Your browser does not support the video tag. 
               </video>
             </div>
-            <div className="top-container">
-              <div className="video-header-container">
-                <div className="video-header">
-                  <h1> Hermione streamlines the lecture recording process </h1>
-                  <p> A Computer Vision Project</p>
-                </div>
-              </div>
-
-              <div className="button-container">
-                <div className="button-info">
-                  <p> Hermione is currently available to Students and Professors. Enhance your learning at your own pace and <u>get started</u> today! </p>
-                </div>
-                <StudentButton />
-                <ProfessorButton />
-              </div>
-              <ClassList />
-
-              <div className="contact-container">
-                <p> Interested in using our service? </p>
-                <p> Contact us at <u>me@hermione.io</u></p>
-              </div>
-            </div>
+            
+            // Text here
+            <Grid bsClass="info">
+              <Row className="show-grid">
+                <Col md={6}>
+                  <div className="video-header">
+                    <h1> HERMIONE </h1> 
+                    <p className="video-subtitle"> A Computer Vision Project</p>  
+                  </div>
+                </Col>
+              </Row>
+              <Row className="show-grid">
+                <Col md={6}>
+                  <div className="video-header">
+                     <p> Hermione is currently available to Students and Professors.</p>
+                     <StudentButton />
+                     <ProfessorButton />
+                  </div>
+                </Col>
+              </Row>
+              <Row className="show-grid">
+                <Col md={4}>
+                  <div className="video-header">
+                    <p> Contact us at <u>me@hermione.io</u></p>
+                  </div>
+                </Col>
+              </Row>
+            </Grid>
 
           </div>
         </div>

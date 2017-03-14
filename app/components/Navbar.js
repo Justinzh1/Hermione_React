@@ -21,65 +21,6 @@ class Login extends React.Component {
 	};
 }
 
-class LoggedInItems extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			visible: false
-		}
-	}
-
-	getStyle() {
-		return (this.props.visible) ? {
-		  display: 'inline-block',
-		  position: 'absolute',
-		  right: "50px",
-		  zIndex: 50,
-		  opacity: 1,
-		  marginTop:'16px',
-		  width: '110px'
-		} :
-		{
-		  display: 'none',
-		  position: 'absolute',
-		  right: "50px",
-		  zIndex: 50,
-		  opacity: 0.3,
-		  marginTop:'16px',
-		  width: '110px'
-		} 
-	}
-
-	handleLogout(event) {
-	    event.preventDefault();
-	    this.props.dispatch(logout());
-	  }
-
-	render() {
-		const style = this.getStyle();
-		return (
-			<div>
-				<Paper style={style}>
-					<Menu>
-						<Link to="/account">
-							<MenuItem primaryText="Profile" />
-						</Link>
-						<Link to="/dashboard">
-							<MenuItem primaryText="Dashboard" />
-						</Link>
-						<Link to="#">
-							<MenuItem
-								primaryText="Sign Out" 
-								onClick={this.handleLogout.bind(this)}
-							/>
-						</Link>
-					</Menu>
-   				 </Paper>
-			</div>
-		);
-	}
-}
-
 var Logged = (props) => (
 	<IconMenu
 	    {...props}
@@ -100,12 +41,6 @@ class LoginItems extends React.Component {
 		}
 	}
 
-	getDropdown() {
-		this.setState = {clicked: !this.props.clicked};
-		console.log("Dropping down");
-		this.props.clickMenu();
-	}
-
 	render() {
 		return (
 			<IconMenu
@@ -118,6 +53,45 @@ class LoginItems extends React.Component {
 			    anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
 			  >
 		  	</IconMenu>
+		)
+	}
+}
+
+class LoggedIn extends React.Component {
+	constructor(props) {
+		super(props);
+	}
+
+	handleLogout(event) {
+	    event.preventDefault();
+	    this.props.dispatch(logout());
+	}
+
+
+	render() {
+		return (
+			<IconMenu
+		    	iconButtonElement={
+					<IconButton>
+			      		<MoreVertIcon color="white" onClick={() => this.getDropdown()}/>
+		      		</IconButton>
+			    }
+			    targetOrigin={{horizontal: 'right', vertical: 'bottom'}}
+			    anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
+		  	>
+		  		<Link to="/account">
+					<MenuItem primaryText="Profile" />
+				</Link>
+				<Link to="/dashboard">
+					<MenuItem primaryText="Dashboard" />
+				</Link>
+				<Link to="#">
+					<MenuItem
+						primaryText="Sign Out" 
+						onClick={this.handleLogout.bind(this)}
+					/>
+				</Link>
+			</IconMenu>
 		)
 	}
 }
@@ -149,12 +123,11 @@ class Navbar extends React.Component {
 	}
 
 	render() {
-		var logged = (<LoginItems clickMenu={() => this.clickMenu()} />);
+		var logged = <LoggedIn/>
 		var signin = (<FlatButton label="Login" href="/login"/>)
 		var rightComponent = (this.props.token) ? logged : signin;
 		return (
 			<div>
-				<LoggedInItems visible={this.state.clicked} tabIndex="0" onBlur={() => this.closeMenu}/>
 				<AppBar
 				className="appbar"
 			    title="HERMIONE"

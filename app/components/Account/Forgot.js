@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import { forgotPassword } from '../../actions/auth';
+import {Button} from 'react-bootstrap/lib';
 import Messages from '../Messages';
 
 class Forgot extends React.Component {
@@ -28,7 +29,7 @@ class Forgot extends React.Component {
           <label htmlFor="email">Email</label>
           <input type="email" name="email" id="email" placeholder="Email" value={this.state.email} onChange={this.handleChange.bind(this)} autoFocus/>
           <br/>
-          <button type="submit">Reset Password</button>
+          <Button type="submit">Reset Password</Button>
         </form>
       </div>
     );

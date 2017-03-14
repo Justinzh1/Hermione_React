@@ -1,20 +1,33 @@
 import React from 'react';
 import { connect } from 'react-redux'
+import RaisedButton from 'material-ui/RaisedButton';
+import actions from '../../actions/index';
+
 import Messages from '../Messages';
 import ClassList from './ClassList';
 
-import RaisedButton from 'material-ui/RaisedButton';
+var injectTapEventPlugin = require("react-tap-event-plugin");
+injectTapEventPlugin();
 
 const mapStateToProps = (state) => {
-  return {	
-    messages: state.messages
+  console.log(state.auth.user);
+  return {  
+    messages: state.messages,
+    user: state.user
   };
 };
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getUserCourses: () => dispatch(actions.course.getUserCourses())
+  }
+}
 
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      active: 0,
       courses: [
         { title: "EE16A", color: "#EEEEEE", inverse: "#90CAF9" },
         { title: "CS160", color: "#EEEEEE" , inverse: "#FFE082"},
@@ -22,14 +35,21 @@ class Dashboard extends React.Component {
       ]
     }
   }
+
+  componentDidMount() {
+    this.props.getUserCourses();
+  }
+
   render() {
       return (
         <div className='container'>
-      	   <h1> Dashboard </h1> 
+           <h1> Dashboard </h1> 
+           <p> User {this.props.user} </p>
            <ClassList courses={this.state.courses}/> 
-	      </div>
+
+        </div>
       );
   }
 }
 
-export default connect(mapStateToProps)(Dashboard);
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

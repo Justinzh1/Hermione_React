@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux'
 import { login } from '../../actions/auth';
 import { facebookLogin, twitterLogin, googleLogin, vkLogin, githubLogin } from '../../actions/oauth';
+import {Button} from 'react-bootstrap/lib';
 import Messages from '../Messages';
 
 class Login extends React.Component {
@@ -51,10 +52,10 @@ class Login extends React.Component {
           <label htmlFor="password">Password</label>
           <input type="password" name="password" id="password" placeholder="Password" value={this.state.password} onChange={this.handleChange.bind(this)}/>
           <p><Link to="/forgot">Forgot your password?</Link></p>
-          <button type="submit">Log in</button>
+          <Button type="submit">Log in</Button>
         </form>
         <hr/>
-        <button onClick={this.handleGoogle.bind(this)}>Sign in with Google</button>
+        <Button onClick={this.handleGoogle.bind(this)}>Sign in with Google</Button>
         <br/>
         <p>Don't have an account? <Link to="/signup">Sign up</Link></p>
       </div>

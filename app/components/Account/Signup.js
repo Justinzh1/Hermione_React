@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux'
 import { signup } from '../../actions/auth';
 import { facebookLogin, twitterLogin, googleLogin, vkLogin, githubLogin } from '../../actions/oauth';
+import {Button} from 'react-bootstrap/lib';
 import Messages from '../Messages';
 
 class Signup extends React.Component {
@@ -53,10 +54,10 @@ class Signup extends React.Component {
           <label htmlFor="password">Password</label>
           <input type="password" name="password" id="password" placeholder="Password" value={this.state.password} onChange={this.handleChange.bind(this)}/>
           <p className="help-text">By signing up, you agree to the <Link to="/">Terms of Service</Link>.</p>
-          <button type="submit">Create an account</button>
+          <Button type="submit">Create an account</Button>
         </form>
         <hr/>
-        <button onClick={this.handleGoogle.bind(this)}>Sign in with Google</button>
+        <Button onClick={this.handleGoogle.bind(this)}>Sign in with Google</Button>
         <br/>
         <p>Already have an account? <Link to="/login">Log in</Link></p>
       </div>

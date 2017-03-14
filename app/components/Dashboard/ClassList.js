@@ -2,13 +2,29 @@ import React from 'react';
 import { connect } from 'react-redux'
 import Messages from '../Messages';
 
-import RaisedButton from 'material-ui/RaisedButton';
-import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import {
+  Card,
+  CardActions, 
+  CardHeader, 
+  CardMedia, 
+  CardTitle, 
+  CardText, 
+  IconMenu, 
+  MenuItem, 
+  IconButton,
+  RaisedButton
+} from 'material-ui';
 
-import HorizontalScroll from 'react-scroll-horizontal';
+import {
+  Button, 
+  ButtonToolbar, 
+  DropdownButton
+} from 'react-bootstrap/lib';
+
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 
 const mapStateToProps = (state) => {
-  return {	
+  return {  
     messages: state.messages
   };
 };
@@ -18,7 +34,7 @@ const listStyle= {
 
 const cardStyle={
   width: '25%',
-  height: "120px",
+  height: "140px",
   minWidth: "225px",
   display: "inline-block",
   marginRight: "20px",
@@ -70,16 +86,29 @@ class ClassCard extends React.Component {
   clickSelected() {
     var isActive = this.props.id;
     this.setState({active: isActive});
-    this.props.updateActive(isActive);
   }
 
   render() {
+    const selectStyle = {
+      position: 'relative',
+      display: 'inline-block',
+      float: "right"
+    }
     var color = (this.props.id == this.state.active) ? this.state.inverse : this.state.color;
     return (
       <Card 
         style={Object.assign(cardStyle, { backgroundColor: this.props.bg })}
         onClick={() => this.clickSelected()}
         >
+        <div className="select-class" style={selectStyle}>
+          <IconMenu
+            iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+            anchorOrigin={{horizontal: 'left', vertical: 'top'}}
+            targetOrigin={{horizontal: 'left', vertical: 'top'}}
+          >
+            <MenuItem primaryText="Enroll" />
+          </IconMenu>
+        </div>
         <CardHeader 
           title={this.props.course.title}
           titleStyle={cardHeaderStyle}
@@ -98,51 +127,22 @@ class ClassList extends React.Component {
     this.state = {
       active: 0
     }
-    this.updateActive = this.updateActive.bind(this);
   }
 
-  updateColor(course, id) {
-    var color = (this.state.active == id) ? course.inverse : course.color;
-    return color
-  }
-
-  updateActive(active) {
-    console.log("Active " + active);
-    this.setState({ active: active });
+  getActiveCourse() {
+    return this.props.courses[this.state.active];
   }
 
   render() {
-
-    var card = (c, x) => {
-      var color = this.updateColor(c,x);
-
-      return (
-        <ClassCard 
-          course={c} 
-          key={x}
-          val={x}
-          updateActive={this.updateActive}
-          active={this.state.active}
-          />
-      )
-    }
-
     const child = { width: `30px`, height: `100%`, backgroundColor: `green`}
 
     return (
       <div>
-        {this.props.courses.map((key, index) => {
-          var color = (this.state.active == index) ? key.inverse : key.color;
-          return (
-            <ClassCard 
-            course={key} 
-            key={index}
-            id={index}
-            updateActive={this.updateActive}
-            bg={color}
-            />
-          )
-        })}
+        <ClassCard
+          updateActive={this.updateActive}
+          course={this.getActiveCourse()}
+          courses={this.props.courses}
+          />
         <p> Active card is {this.state.active} </p>
       </div>
     );

@@ -35,16 +35,18 @@ var User = require('../models/User');
  */
 
  exports.getClasses = function(req, res, next) {
- 	var courseData = Object.keys(req.body.user.enrolled);
- 	var courseList = courseData.map((c) => (courseData[c]).code);
- 	Course.find(
- 		{ $all: courseList },
- 		function(err, courses) {
- 			if (courses) {
- 				res.send({courses: courses});
- 			}
- 		}
- 	});
+ 	if(req.courses) {
+ 		var courseData = Object.keys(req.courses);
+	 	var courseList = courseData.map((c) => (courseData[c]).code);
+	 	Course.find(
+	 		{ $all: courseList },
+	 		function(err, courses) {
+	 			if (courses) {
+	 				res.send({courses: courses});
+	 			}
+	 		}
+	 	});
+ 	}
  }
 
 
@@ -155,4 +157,3 @@ exports.videoDelete = function(req, res, next) {
  * DELETE /class
  * Deletes a class
  */
-

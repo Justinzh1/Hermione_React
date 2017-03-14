@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux'
 import { updateProfile, changePassword, deleteAccount } from '../../actions/auth';
 import { link, unlink } from '../../actions/oauth';
+import {Button} from 'react-bootstrap/lib';
 import Messages from '../Messages';
 
 class Profile extends React.Component {
@@ -72,7 +73,7 @@ class Profile extends React.Component {
           <input type="text" name="website" id="website" value={this.state.website} onChange={this.handleChange.bind(this)}/>
           <label>Gravatar</label>
           <img src={this.state.gravatar} className="gravatar" width="100" height="100"/>
-          <button type="submit">Update Profile</button>
+          <Button type="submit">Update Profile</Button>
         </form>
         <h4>Change Password</h4>
         <form onSubmit={this.handleChangePassword.bind(this)}>
@@ -81,14 +82,14 @@ class Profile extends React.Component {
           <label htmlFor="confirm">Confirm Password</label>
           <input type="password" name="confirm" id="confirm" value={this.state.confirm} onChange={this.handleChange.bind(this)}/>
           <br/>
-          <button type="submit">Change Password</button>
+          <Button type="submit">Change Password</Button>
         </form>
         <h4>Linked Accounts</h4>
         <p>{googleLinkedAccount}</p>
         <h4>Delete Account</h4>
         <form onSubmit={this.handleDeleteAccount.bind(this)}>
           <p>You can delete your account, but keep in mind this action is irreversible.</p>
-          <button type="submit">Delete my account</button>
+          <Button type="submit">Delete my account</Button>
         </form>
       </div>
     );
