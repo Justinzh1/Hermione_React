@@ -42,9 +42,7 @@ class Dashboard extends React.Component {
 
   render() {
       return (
-        <div className='container'>
-           <h1> Dashboard </h1> 
-           <p> User {this.props.user} </p>
+        <div className='sidebar'>
            <ClassList courses={this.state.courses}/> 
 
         </div>

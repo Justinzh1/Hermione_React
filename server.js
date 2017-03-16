@@ -31,6 +31,7 @@ var Course = require('./models/Course');
 // Controllers
 var userController = require('./controllers/user');
 var contactController = require('./controllers/contact');
+var courseControlelr = require('./controllers/course')
 
 // React and Server-Side Rendering
 var routes = require('./app/routes');

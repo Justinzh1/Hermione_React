@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 var courseSchema = new mongoose.Schema({
     title: String,
     description: String,
-    professors: [{ name: String }],
+    professors: [String],
     videos: [{
         title: String,
         id: Number,

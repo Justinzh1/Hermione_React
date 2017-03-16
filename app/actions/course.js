@@ -15,7 +15,19 @@ export function getUserCourses() {
       })
     }).then((response) => {
       if (response.ok) {
-        return response.json();
+        return response.json().then((json) => {
+          dispatch({
+            type: 'GET_CLASSES_SUCCESS',
+            messages: [json]
+          });
+        });
+      } else {
+        return response.json().then((json) => {
+          dispatch({
+            type: 'GET_CLASSES_FAILURE',
+            messages: [json]
+          });
+        });
       }
     });
   };
@@ -26,15 +38,34 @@ export function createCourse() {
     dispatch({
       type: 'CLEAR_MESSAGES'
     });
+    console.log("Creating a class");
     return fetch('/createClass', {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        courses: getState().user.courses
+        input: { 
+          title: getState().title,
+          description: getState().description,
+          professors: getState().professors,
+          code: getState().code,
+          year: getState().year,
+        }
       })
     }).then((response) => {
       if (response.ok) {
-        return response.json();
+        return response.json().then((json) => {
+          dispatch({
+            type: 'CREATE_CLASS_SUCCESS',
+            messages: [json]
+          })
+        });
+      } else {
+        return response.json().then((json) => {
+          dispatch({
+            type: 'CREATE_CLASS_FAILURE',
+            messages: [json]
+          })
+        })
       }
     });
   };

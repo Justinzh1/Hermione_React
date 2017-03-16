@@ -77,7 +77,6 @@ class Home extends React.Component {
               </video>
             </div>
             
-            // Text here
             <Grid bsClass="info">
               <Row className="show-grid">
                 <Col md={6}>
