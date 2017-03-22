@@ -17,6 +17,10 @@ p {
   margin: 0;
 }
 
+iframe {
+  border: none;
+}
+
 .form-control:focus {
   outline: none;
   border: none;
@@ -49,11 +53,11 @@ button:focus {
 
 footer {
   display: inline-block;
+  position: absolute;
   width: 100%;
   color: white;
   background-color: rgba(0,0,0,0.9);
-  margin-top: 30px;
-  height: 60px;
+  height: 53px;
   bottom: 0;
   padding: 0 30px;
   font-family: 'lato';
@@ -129,6 +133,13 @@ a {
   color: black;
   font-family: 'roboto';
   font-weight: 200;
+  margin: 0;
+}
+
+.sub-container {
+  position: relative;
+  padding-top: 7.5px;
+  padding-bottom: 2.5px;
 }
 
 .inline {
@@ -245,6 +256,12 @@ a {
   z-index: 10;
   width: 100vw;
   padding: 20px;
+}
+
+.video-bg {
+  display: inline-block;
+  position: relative;
+  top: -16px;
 }
 
 .video-container {

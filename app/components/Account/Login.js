@@ -6,6 +6,10 @@ import { facebookLogin, twitterLogin, googleLogin, vkLogin, githubLogin } from '
 import {Button} from 'react-bootstrap/lib';
 import Messages from '../Messages';
 
+import {
+  TextField,
+} from 'material-ui';
+
 class Login extends React.Component {
   constructor(props) {
     super(props);
@@ -41,16 +45,34 @@ class Login extends React.Component {
     this.props.dispatch(githubLogin())
   }
 
+  updateForm(key, event, value) {
+    var entry = {}
+    entry[key] = value;
+    this.setState(entry);
+  }
+
+
   render() {
     return (
       <div className="container">
         <Messages messages={this.props.messages}/>
         <form onSubmit={this.handleLogin.bind(this)}>
           <h4>Log In</h4>
-          <label htmlFor="email">Email</label>
-          <input type="email" name="email" id="email" placeholder="Email" value={this.state.email} onChange={this.handleChange.bind(this)} autoFocus/>
-          <label htmlFor="password">Password</label>
-          <input type="password" name="password" id="password" placeholder="Password" value={this.state.password} onChange={this.handleChange.bind(this)}/>
+          <div>
+            <TextField
+              hintText="email"
+              floatingLabelText="email"
+              onChange={(e,v) => this.updateForm("email", e, v)}
+            />
+          </div>
+          <div>
+            <TextField
+              hintText="password"
+              floatingLabelText="password"
+              type="password"
+              onChange={(e,v) => this.updateForm("password", e, v)}
+            />
+            </div>
           <p><Link to="/forgot">Forgot your password?</Link></p>
           <Button type="submit">Log in</Button>
         </form>

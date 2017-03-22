@@ -30,13 +30,15 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 
 const mapStateToProps = (state) => {
   return {  
-    messages: state.messages
+    messages: state.messages,
+    user: state.auth.user,
+    input: state.input
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    createNewCourse: () => dispatch(actions.course.createCourse())
+    createNewCourse: (input) => dispatch(actions.course.createCourse(input))
   }
 }
 
@@ -60,7 +62,8 @@ class CreateDialog extends React.Component {
       code: '',
       year: '',
       students: 0,
-      week: 0
+      week: 0,
+      date: ''
     }
   }
 
@@ -79,7 +82,7 @@ class CreateDialog extends React.Component {
   }
 
   handleSubmit() {
-    this.props.createNewCourse();
+    this.props.createNewCourse(this.state);
   }
 
   render() {
@@ -116,6 +119,7 @@ class CreateDialog extends React.Component {
               <TextField
                 hintText="Description"
                 floatingLabelText="Description"
+                onChange={(e,v) => this.updateForm("description", e, v)}
               /><br />
               <TextField
                 hintText="Professors"
@@ -124,13 +128,20 @@ class CreateDialog extends React.Component {
               <TextField
                 hintText="Class Code"
                 floatingLabelText="Class Code"
+                onChange={(e,v) => this.updateForm("code", e, v)}
               /><br />
               <TextField
                 hintText="Year"
                 floatingLabelText="Year (ex. sp17)"
+                onChange={(e,v) => this.updateForm("year", e, v)}
               /><br />
               <div>
-                <DatePicker hintText="Landscape Inline Dialog" container="inline" mode="landscape" />
+                <DatePicker 
+                  hintText="Start date" 
+                  container="inline" 
+                  mode="landscape"
+                  onChange={(e,v) => this.updateForm("date", e, v)}
+                />
               </div>
             </form>
           </div>

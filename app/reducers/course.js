@@ -15,9 +15,10 @@ export default function getCourses(state = initialState, action, user) {
         user: user,
         courses: action.courses
       });
-    case: 'GET_CLASSES_FAILURE':
-    case 'CREATE_CLASS_SUCCESS':
+    case 'GET_CLASSES_FAILURE':
     case 'CREATE_CLASS_FAILURE':
+    case 'ENROLL_IN_CLASS_SUCCESS':
+    case 'ENROLL_IN_CLASS_FAILURE':
     default:
       return state;
   }

@@ -30,16 +30,15 @@ var User = require('../models/User');
 */
 
 /**
- * GET /courses
+ * GET /getUserClasses
  * Returns list of classes user is enrolled in
  */
 
- exports.getClasses = function(req, res, next) {
- 	if (req.courses) {
- 		var courseData = Object.keys(req.courses);
-	 	var courseList = courseData.map((c) => (courseData[c]).code);
+ exports.getUserClasses = function(req, res, next) {
+ 	var courses = req.query.courses.split(',');
+ 	if (courses) {
 	 	Course.find(
-	 		{ $all: courseList },
+	 		{ code: { $in: courses }},
 	 		function(err, courses) {
 	 			if (courses) {
 	 				res.send({courses: courses});
@@ -53,39 +52,34 @@ var User = require('../models/User');
 
 
 /** 
- * POST /class
+ * POST /createClass
  * Creates a new class
  */
 
 exports.createClass = function(req, res, next) {
-	if (req.user.professor) {
-		Course.findOne(
-			{ $or: [
-				{ title: req.body.title, year: req.body.year },
-				{ code: req.body.code }
-			]}, 
-			function(err, course) {
-			    if (course) {
-			    	return res.status(400).send({ msg: 'The class you are trying to correct already exists.' });
-			    }
-			    course = new Course({
-					title: req.body.title,
-					description: req.body.description,
-					professors: req.body.professors,
-					videos: [],
-					code: req.body.code,
-					year: req.body.year,
-					students: 0,
-					week: 1,
-					start: req.body.date
-			    });
-			    course.save(function(err) {
-			    	res.send({course: course});
-			    });
-	  		});
-	} else {
-		return res.status(400).send({ msg: 'You are not authorized to do this.' });
-	}
+	Course.findOne(
+		{ $or: [
+			{ title: req.body.title, year: req.body.year }
+		]}, 
+		function(err, course) {
+		    if (course) {
+		    	return res.status(400).send({ msg: 'The class you are trying to correct already exists.' });
+		    }
+		    course = new Course({
+				title: req.body.title,
+				description: req.body.description,
+				professors: req.body.professors,
+				videos: [],
+				code: req.body.code,
+				year: req.body.year,
+				students: 0,
+				week: 1,
+				start: req.body.date
+		    });
+		    course.save(function(err) {
+		    	res.send({course: course});
+		    });
+  		});
 }
 
 /** 
@@ -93,15 +87,28 @@ exports.createClass = function(req, res, next) {
  * Enrolls in a Class
  */
 
- exports.enrollInCourse = function(req, res, next) {
- 	Course.findOne({ code: req.body.code }, function(err, course) {
- 		User.findOneAndUpdate(
- 			{ _id: req.body._id},
- 			{ $push: {
- 				enrolled: req.body.code
- 			}},
- 			{upsert: true, returnNewDocument: true}
- 		);
+ exports.enrollInClass = function(req, res, next) {
+ 	console.log("enrollInClassCTRL " + JSON.stringify(req.body));
+ 	Course.findOne({ code: req.body.code }, function(err) {
+ 		if (err) {
+ 			res.send(404);
+ 			return;
+ 		}
+
+ 		console.log(req.body.user);
+
+ 		User.findOne({ _id: req.body.user._id}, function(err, user) {
+ 			console.log(user);
+
+	 		if (!user.enrolled) {
+	 			user.enrolled = [];
+	 		}
+	 		user.enrolled.push(req.body.code);
+	 		user.save();
+ 		});
+
+ 		res.send(200)
+
  	});
  }
 

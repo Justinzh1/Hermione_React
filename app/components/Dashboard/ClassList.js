@@ -35,21 +35,32 @@ const mapStateToProps = (state) => {
   };
 };
 
-const listStyle= {
-}
-
 const cardStyle={
-  width: '25%',
-  height: "140px",
+  width: '100%',
+  height: "auto",
   minWidth: "225px",
   display: "inline-block",
-  marginRight: "20px",
-  marginBottom: "15px"
+  position: "relative",
+  zIndex: 10
 }
 
 const cardHeaderStyle={
   fontSize: "20px",
-  fontFamily: "roboto"
+  fontFamily: "roboto",
+  margin: 0,
+  padding: 0
+}
+
+const subtitleStyle={
+  fontFamily: "roboto",
+  fontSize: '12px',
+  lineHeight: "1.25em",
+  width: "100%"
+}
+
+const colStyle={
+  border: "1px solid #eee",
+  borderTop: "2px solid #eee"
 }
 
 class ClassInfo extends React.Component {
@@ -60,20 +71,28 @@ class ClassInfo extends React.Component {
   render() {
     return (
       <div className="left-right-container align-center">
-        <div className="sub-container inline align-center">
-          <i className="material-icons">timeline</i>
-          <p className="sub-info"> Week 1 </p>
-        </div>
-        <div className="divider"></div>
-        <div className="sub-container inline align-center">
-          <i className="material-icons">date_range</i>
-          <p className="sub-info"> SP17 </p>
-        </div>
-        <div className="divider"></div>
-        <div className="sub-container inline align-center">
-          <i className="material-icons">face</i>
-          <p className="sub-info"> 214 </p>
-        </div>        
+        <div className="row">
+          <div style={colStyle} className="col col-md-4">
+            <div className="sub-container inline align-center">
+              <i className="material-icons">timeline</i>
+              <p className="sub-info"> Week 1 </p>
+            </div>
+          </div>
+
+          <div style={colStyle} className="col col-md-4">
+            <div className="sub-container inline align-center">
+              <i className="material-icons">date_range</i>
+              <p className="sub-info"> SP17 </p>
+            </div>
+          </div>
+
+          <div style={colStyle} className="col col-md-4">
+            <div className="sub-container inline align-center">
+              <i className="material-icons">face</i>
+              <p className="sub-info"> 214 </p>
+            </div>       
+          </div>
+        </div> 
       </div>
     )
   }
@@ -83,8 +102,6 @@ class ClassCard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      color: this.props.course.color,
-      inverse: this.props.course.inverse,
       active: 0,
       enroll: false,
       create: false,
@@ -102,7 +119,6 @@ class ClassCard extends React.Component {
   }
 
   handleCreate() {
-    console.log("Opening create");
     this.setState({create: true});
   }
 
@@ -114,16 +130,12 @@ class ClassCard extends React.Component {
     this.setState({ code: value });
   }
 
-  handleSubmit() {
-    var code = this.state.code;
-    console.log("code : " + code);
-  }
-
   render() {
     const selectStyle = {
       position: 'relative',
       display: 'inline-block',
-      float: "right"
+      float: "right",
+      top:"8px"
     }
     const actions = [
       <FlatButton
@@ -135,12 +147,12 @@ class ClassCard extends React.Component {
         label="Enroll"
         primary={true}
         keyboardFocused={false}
-        onTouchTap={() => this.handleSubmit()}
+        onTouchTap={() => this.handleEnroll()}
       />
     ];
 
     var course = this.props.courses[this.state.active];
-    const popup = (
+    const enrollDialog = (
       <div>
         <Dialog
           title="Enroll in a Class"
@@ -160,13 +172,43 @@ class ClassCard extends React.Component {
       </div>
     );
 
+    var titleHeader = (course) ?
+    (<div>
+      <CardHeader 
+        title={course.title}
+        titleStyle={cardHeaderStyle}
+        titleColor={"black"}
+        subtitle={course.description}
+        subtitleStyle={subtitleStyle}
+      />
+      
+    </div>
+    ) :
+    (<CardHeader 
+      titleStyle={cardHeaderStyle}
+      titleColor={"black"}
+    />)
+
     return (
       <Card 
-        style={Object.assign(cardStyle, { backgroundColor: this.props.bg })}
+        style={Object.assign(cardStyle, {})}
+
       >
         <div className="select-class" style={selectStyle}>
-          {popup}
-          <CreateDialog open={this.state.create} openDialog={() => this.handleCreate()} closeDialog={() => this.handleClose()}/>
+
+
+          <EnrollDialog
+            open={this.state.enroll}
+            openDialog={() => this.handleEnroll()}
+            closeDialog={() => this.handleClose()}
+          />
+
+          <CreateDialog 
+            open={this.state.create} 
+            openDialog={() => this.handleCreate()}
+            closeDialog={() => this.handleClose()}
+          />
+
           <IconMenu
             iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
             anchorOrigin={{horizontal: 'left', vertical: 'top'}}
@@ -183,11 +225,9 @@ class ClassCard extends React.Component {
             <MenuItem primaryText="Create" onTouchTap={() => this.handleCreate()} />
           </IconMenu> 
         </div>
-        <CardHeader 
-          title={course.title}
-          titleStyle={cardHeaderStyle}
-          titleColor={"black"}
-        />
+        {titleHeader}
+        <div>
+        </div>
         <ClassInfo />
       </Card>
     )
@@ -209,6 +249,7 @@ class ClassList extends React.Component {
 
   setActiveCourse(x) {
     this.setState({active: x});
+    this.props.setActiveCourse(x);
   }
 
   render() {
@@ -222,7 +263,6 @@ class ClassList extends React.Component {
           courses={this.props.courses}
           setActiveCourse={(x) => this.setActiveCourse(x)}
           />
-        <p> Active card is {this.state.active} </p>
       </div>
     );
   }

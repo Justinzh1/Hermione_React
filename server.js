@@ -31,7 +31,7 @@ var Course = require('./models/Course');
 // Controllers
 var userController = require('./controllers/user');
 var contactController = require('./controllers/contact');
-var courseControlelr = require('./controllers/course')
+var courseController = require('./controllers/course')
 
 // React and Server-Side Rendering
 var routes = require('./app/routes');
@@ -102,6 +102,9 @@ app.post('/reset/:token', userController.resetPost);
 app.get('/unlink/:provider', userController.ensureAuthenticated, userController.unlink);
 app.post('/auth/google', userController.authGoogle);
 app.get('/auth/google/callback', userController.authGoogleCallback);
+app.get('/getUserClasses', courseController.getUserClasses);
+app.post('/createClass', courseController.createClass);
+app.post('/enroll', courseController.enrollInClass);
 
 // React server rendering
 app.use(function(req, res) {

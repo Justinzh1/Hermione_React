@@ -33,30 +33,6 @@ var Logged = (props) => (
   	</IconMenu>
 );
 
-class LoginItems extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			clicked: false
-		}
-	}
-
-	render() {
-		return (
-			<IconMenu
-		    	iconButtonElement={
-					<IconButton>
-			      		<MoreVertIcon color="white" onClick={() => this.getDropdown()}/>
-		      		</IconButton>
-			    }
-			    targetOrigin={{horizontal: 'right', vertical: 'bottom'}}
-			    anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
-			  >
-		  	</IconMenu>
-		)
-	}
-}
-
 class LoggedIn extends React.Component {
 	constructor(props) {
 		super(props);
@@ -67,13 +43,12 @@ class LoggedIn extends React.Component {
 	    this.props.dispatch(logout());
 	}
 
-
 	render() {
 		return (
 			<IconMenu
 		    	iconButtonElement={
 					<IconButton>
-			      		<MoreVertIcon color="white" onClick={() => this.getDropdown()}/>
+			      		<MoreVertIcon color="white"/>
 		      		</IconButton>
 			    }
 			    targetOrigin={{horizontal: 'right', vertical: 'bottom'}}

@@ -25,7 +25,7 @@ var userSchema = new mongoose.Schema({
   google: String,
   github: String,
   vk: String,
-  enrolled: [{code: String}]
+  enrolled: [String]
 }, schemaOptions);
 
 userSchema.pre('save', function(next) {

@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import Messages from '../Messages';
+import actions from '../../actions/index';
 
 import {
   IconButton,
@@ -22,16 +23,23 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 
 const mapStateToProps = (state) => {
   return {  
-    messages: state.messages
+    messages: state.messages,
+    user: state.auth.user
   };
 };
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    enrollInCourse: (c) => dispatch(actions.course.enrollInClass(c))
+  }
+}
 
 class EnrollDialog extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: this.props.open
+      open: this.props.open,
+      code: ''
     }
   }
 
@@ -44,8 +52,13 @@ class EnrollDialog extends React.Component {
     this.props.closeDialog("enroll");
   }
 
-  handleSubmit() {
+  updateForm(e,v) {
+    this.setState({code: v});
+  }
 
+  handleSubmit() {
+    console.log("handleSubmit " + this.state.code);
+    this.props.enrollInCourse(this.state.code);
   }
 
   handleChange(key, e) {
@@ -63,7 +76,7 @@ class EnrollDialog extends React.Component {
         label="Enroll"
         primary={true}
         keyboardFocused={false}
-        onTouchTap={this.submit}
+        onTouchTap={() => this.handleSubmit()}
       />
     ];
 
@@ -77,12 +90,10 @@ class EnrollDialog extends React.Component {
           onRequestClose={() => this.handleClose()}
         >
           <form>
-            <FormControl 
-              type="text" 
-              placeholder="Class Code"
-              bsClass="enroll-form-control"
-              value={this.state.value}
-              onChange={(e) => this.handleChange(e)}
+            <TextField
+              hintText="asdf"
+              floatingLabelText="Class Code"
+              onChange={(e,v) => this.updateForm(e, v)}
             />
           </form>
         </Dialog>
@@ -91,4 +102,4 @@ class EnrollDialog extends React.Component {
   }
 }
 
-export default connect(mapStateToProps)(EnrollDialog);
+export default connect(mapStateToProps, mapDispatchToProps)(EnrollDialog);
