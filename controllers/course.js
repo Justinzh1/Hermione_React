@@ -117,25 +117,23 @@ exports.createClass = function(req, res, next) {
  * Adds a new video to a class
  */
 
-exports.addVideo = function(req, res, next) {
-	if (req.user.professor) {
-		Course.findOneAndUpdate(
-			{ title: req.body.title, year: req.body.year },
-			{ $push: {
-				videos : {
-					title: req.body.video.title,
-					id: req.body.video.id,
-					date: req.body.video.date,
-					url: req.body.video.url,
-					timestamps: [],
-					length: req.body.video.length
-			 	}
-			}},
-			{upsert: true, returnNewDocument: true}
-		);
-	} else {
-		return res.status(400).send({ msg: 'You are not authorized to do this.' });
-	}
+exports.createVideo = function(req, res, next) {
+	Course.findOne(
+		{ title: req.body.title, year: req.body.year }, function(err, course) {
+			if (err) {
+				res.send(404);
+				return;
+			}
+			course.videos.push({
+				title: req.body.video.title,
+				id: req.body.video.id,
+				date: req.body.video.date,
+				url: req.body.video.url,
+				timestamps: [],
+				length: req.body.video.length
+			});
+			course.save();
+		});
 }
 
 /**

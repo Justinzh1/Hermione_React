@@ -4,6 +4,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import actions from '../../actions/index';
 import Messages from '../Messages';
 
+import VideoInfo from './VideoInfo';
+
 const mapStateToProps = (state) => {
   return {  
     messages: state.messages,
@@ -23,6 +25,14 @@ const videoHeader = {
   paddingLeft: "20px"
 }
 
+const videoContainer = {
+  width: '100%',
+}
+
+const videoStyle = {
+  backgroundColor: 'black'
+}
+
 class YouTube extends React.Component {
   constructor(props) {
     super(props);
@@ -31,9 +41,9 @@ class YouTube extends React.Component {
   }
 
   render() {
-    var src = "https://www.youtube.com/embed/" + this.props.video;
+    var src = "https://www.youtube.com/embed/" + this.props.video + "?autoplay=1";
     return (
-      <iframe width="600px" height="400px"
+      <iframe width="90%" height="420px"
         src={src}
         frameBorder="0"
         allowFullScreen
@@ -59,15 +69,19 @@ class VideoPlayer extends React.Component {
     var content = (this.props.video) ? (
       <div>
         <div style={videoHeader}>
-          <h3 style={videoHeaderStyle} > {this.props.video.title} </h3>
         </div>
-        <YouTube video={this.props.video.url} />
+        <div style={{textAlign: 'center'}}>
+          <YouTube video={this.props.video.url} style={videoStyle} autoplay={true}/>
+        </div>
       </div>
     ) : (<div style={videoHeader}></div>);
 
     return (
-      <div>
-        {content}
+      <div style={videoContainer}>
+        <div style={videoStyle}>
+          {content}
+        </div>
+        <VideoInfo video={this.props.video}/>
       </div>
     );
   }

@@ -46,6 +46,7 @@ const hideScrollBar={
 }
 
 const listStyle={
+  width: '100%',
   height: "calc(100vh - 290px)",
   overflow: "scroll"
 }
@@ -85,14 +86,15 @@ class VideoList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      active: 0
+      active: 0,
+      filtered: []
     }
   }
 
   setActive(id) {
     console.log("Clicked " + id);
     this.setState({active : id});
-    this.props.setActiveVideo(id);
+    this.props.setActiveVideo(id - 1);
   }
 
   getVideos() {
@@ -100,31 +102,44 @@ class VideoList extends React.Component {
     var icon = (<Avatar icon={<AvPlayArrow />}/>);
     if (this.props.course && this.props.course.videos) {
       this.props.course.videos.map((v, index) => {
+        var dnew = new Date(v.date);
+        var d = v.date ? dnew.toLocaleDateString() : today.toLocaleDateString()
         var item = (
           <ListItem
             color="white"
             leftAvatar={icon}
             primaryText={v.title}
-            secondaryText={<p style={timeText}>{today.toLocaleDateString()}</p>}
-            key={index}
-            onClick={() => this.setActive(index)}
+            secondaryText={<p style={timeText}>{d}</p>}
+            key={v.id}
+            onClick={() => this.setActive(v.id)}
             style={listItemStyle}
           />);
         videos.push(item);
       });
+      videos.reverse();
       return videos;
     }
     return null;
   }
 
+  filterVideos(str) {
+    const filtered = [];
+    this.props.course.videos.map((v, index) => {
+    });
+  }
+
   render() {
       var videos = this.getVideos();
       videos = (videos) ? videos : (<div></div>);
+      var filter = (this.props.course) ? 
+        (<FilterVideos title={this.props.course.title} year={this.props.course.year}/>) :
+        (<FilterVideos />);
+
       return (
         <div style={videoStyle}>
           <List style={listStyle}>
             <div style={hideScrollBar}>
-              <FilterVideos />
+              {filter}
               {videos}
             </div>
           </List>

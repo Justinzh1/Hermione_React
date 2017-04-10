@@ -5,7 +5,12 @@ import actions from '../../actions/index';
 
 import {
   Divider,
-  TextField
+  TextField, 
+  Subheader,
+  Dialog,
+  FlatButton,
+  Raisedbutton,
+  DatePicker
 } from 'material-ui';
 
 import ActionSearch from 'material-ui/svg-icons/action/search';
@@ -18,6 +23,12 @@ const mapStateToProps = (state) => {
   };
 };
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    createVideo: (video, title, year) => dispatch(actions.course.createVideo(video, title, year))
+  }
+}
+
 const searchStyle={
   display: 'inline-block',
   position: 'relative',
@@ -27,6 +38,14 @@ const searchStyle={
   left: "16px"
 }
 
+const subheaderStyle={
+  display: 'inline-block'
+}
+
+const searchBarContainer={
+  display: 'inline-block'
+}
+
 const inputContainer={ 
   display:"inline-block",
   width: "100%",
@@ -34,8 +53,13 @@ const inputContainer={
 }
 
 const inputStyle={
-  width: "67%",
-  marginLeft: '16px'
+  
+}
+
+const dialogBody={
+  margin: 0,
+  padding: 0,
+  paddingLeft: "12px"
 }
 
 class FilterVideos extends React.Component {
@@ -43,28 +67,162 @@ class FilterVideos extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      clicked: false,
+      open: false,
+      video: {
+        title: '',
+        id: '',
+        url: '',
+        len: '',
+        date: ''
+      }
     }
   }
 
+  handleClick() {
+    var flip = !this.state.clicked;
+    this.setState({clicked : flip});
+  }
+
+  handleOpen() {
+    this.setState({open: true});
+  }
+
+  handleClose() {
+    this.setState({open: false});
+  }
+
+  updateForm(key, event, value) {
+    var entry = this.state.video;
+    entry[key] = value;
+    this.setState(entry);
+  }
+
+  handleFilter(e) {
+    console.log(e.target.value);
+  }
+
+
+  // TODO
+  // componentShouldUpdate after successfully updating/adding video at this stage
+  submit() {
+    console.log("SUBMITTING " + this.state.video.date);
+    if (this.props.title && this.props.year) {
+      this.props.createVideo(this.state.video, this.props.title, this.props.year);
+    }
+  }
+
+  handleSearch() {
+    var flip = !this.state.clicked;
+    this.setState({clicked : flip});
+  }
+
   render() {
-      return (
-        <div
-          style={inputContainer}
-          >
-          <ActionSearch 
-            style={searchStyle}
-          />
-          <AvPlaylistAdd
-            style={searchStyle}
-          />
-          <TextField
-            fullWidth={true}
-            style={inputStyle}
-            hintText="Filter by"
-          />
-        </div>
-      );
+    var searchBar = (this.state.clicked) ? (
+      <div> 
+        <input 
+          style={inputStyle} 
+          placeholder={"Filter by"}
+          onChange={(e) => this.handleFilter(e)}
+        >
+        </input>
+      </div>
+    ) : (
+      <div>
+        <Subheader> Videos </Subheader>
+      </div>
+    );
+      
+    const actions = [
+      <FlatButton
+        label="Cancel"
+        primary={true}
+        onTouchTap={() => this.handleClose()}
+      />,
+      <FlatButton
+        label="Add"
+        primary={true}
+        onTouchTap={() => this.submit()}
+      />,
+    ];
+
+    return (
+      <div
+        style={inputContainer}
+        >
+        <Dialog
+          title="Add a new Video"
+          actions={actions}
+          modal={true}
+          open={this.state.open}
+          onRequestClose={this.handleClose}
+          bodyStyle={dialogBody}
+        >
+          <div className="row">
+            <div className="col col-md-6">
+              <TextField
+                style={inputStyle}
+                fullWidth={true}
+                hintText="ex. Lecture 1"
+                floatingLabelText="Video Title"
+                onChange={(e,v) => this.updateForm("title", e, v)}
+              />
+            </div>
+            <div className="col col-md-2">
+              <TextField
+                style={inputStyle}
+                hintText="ex. 1"
+                floatingLabelText="Video ID"
+                onChange={(e,v) => this.updateForm("id", e, parseInt(v))}
+              />
+            </div>
+          </div>
+          <div className="row">
+            <div className="col col-md-6">
+              <TextField
+                style={inputStyle}
+                fullWidth={true}
+                hintText="ex. 1ak34j"
+                floatingLabelText="URL"
+                onChange={(e,v) => this.updateForm("url", e, v)}
+              />
+            </div>
+            <div className="col col-md-2">
+              <TextField
+                style={inputStyle}
+                hintText="ex. 61"
+                floatingLabelText="Length"
+                onChange={(e,v) => this.updateForm("len", e, parseInt(v))}
+              />
+            </div>
+          </div>
+          <div className="row" style={{paddingLeft: "12px", paddingTop: "24px", width: "70%"}}>
+              <DatePicker 
+                style={inputStyle} 
+                hintText="Date" 
+                mode="landscape" 
+                onChange={(e, d) => {
+                  console.log("DATE " + d.toLocaleDateString());
+                  this.updateForm("date", e, d.toLocaleDateString());
+                }}
+              />
+          </div>
+        </Dialog>
+
+        <ActionSearch 
+          style={searchStyle}
+          hoverColor={"#003262"}
+          onClick={() => this.handleSearch()}
+        />
+        <AvPlaylistAdd
+          style={searchStyle}
+          hoverColor={"#003262"}
+          onClick={() => this.handleOpen()}
+        />
+        {searchBar}
+      </div>
+    );
   }
 }
 
-export default connect(mapStateToProps)(FilterVideos);
+export default connect(mapStateToProps, mapDispatchToProps)(FilterVideos);

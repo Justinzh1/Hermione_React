@@ -38,7 +38,6 @@ const mapStateToProps = (state) => {
 const cardStyle={
   width: '100%',
   height: "auto",
-  minWidth: "225px",
   display: "inline-block",
   position: "relative",
   zIndex: 10
@@ -48,19 +47,25 @@ const cardHeaderStyle={
   fontSize: "20px",
   fontFamily: "roboto",
   margin: 0,
-  padding: 0
+  padding: 0,
+  paddingLeft: '12px'
 }
 
 const subtitleStyle={
   fontFamily: "roboto",
   fontSize: '12px',
   lineHeight: "1.25em",
-  width: "100%"
+  width: "100%",
+  paddingLeft: '12px'
 }
 
 const colStyle={
   border: "1px solid #eee",
-  borderTop: "2px solid #eee"
+  borderTop: "2px solid #eee",
+  width: '33.3333333%',
+}
+
+const ClassInfoStyle = {
 }
 
 class ClassInfo extends React.Component {
@@ -71,7 +76,7 @@ class ClassInfo extends React.Component {
   render() {
     return (
       <div className="left-right-container align-center">
-        <div className="row">
+        <div style={ClassInfoStyle} className="row">
           <div style={colStyle} className="col col-md-4">
             <div className="sub-container inline align-center">
               <i className="material-icons">timeline</i>

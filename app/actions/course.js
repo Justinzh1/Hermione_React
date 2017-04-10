@@ -18,28 +18,6 @@ export function getUserCourses() {
       .then(response => response.json())
       .then(json => dispatch(fetchCourseSuccess(json)))
       .catch(error => dispatch(fetchCourseFailure(error)))
-
-    // return fetch('/getUserClasses?' + params, {
-    //   method: 'get',
-    //   headers: { 'Content-Type': 'application/json' },
-    // }).then((response) => {
-    //   console.log("response " + response);
-    //   if (response.ok) {
-    //     return response.json().then((json) => {
-    //       dispatch({
-    //         type: 'GET_CLASSES_SUCCESS',
-    //         messages: [json]
-    //       });
-    //     });
-    //   } else {
-    //     return response.json().then((json) => {
-    //       dispatch({
-    //         type: 'GET_CLASSES_FAILURE',
-    //         messages: [json]
-    //       });
-    //     });
-    //   }
-    // });
   };
 }
 
@@ -57,7 +35,6 @@ export function fetchCourseFailure(json) {
     type: 'GET_CLASSES_FAILURE',
   }
 }
-
 
 
 export function createCourse(input) {
@@ -127,4 +104,38 @@ export function enrollInClass(code) {
       }
     });
   };
+}
+
+export function createVideo(video, title, year) {
+  return (dispatch, getState) => {
+    dispatch({
+      type: 'CLEAR_MESSAGES'
+    });
+    return fetch('/createVideo', {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        title: title,
+        year: year,
+        video: video
+      })
+    }).then((response) => {
+      console.log("Response " + JSON.stringify(response));
+      if (response.ok) {
+        return response.json().then((json) => {
+          dispatch({
+            type: 'CREATE_VIDEO_SUCCESS',
+            messages: [json]
+          })
+        });
+      } else {
+        return response.json().then((json) => {
+          dispatch({
+            type: 'CREATE_VIDEO_FAILURE',
+            messages: [json]
+          })
+        })
+      }
+    })
+  }
 }

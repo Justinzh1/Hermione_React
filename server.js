@@ -105,6 +105,7 @@ app.get('/auth/google/callback', userController.authGoogleCallback);
 app.get('/getUserClasses', courseController.getUserClasses);
 app.post('/createClass', courseController.createClass);
 app.post('/enroll', courseController.enrollInClass);
+app.post('/createVideo', courseController.createVideo);
 
 // React server rendering
 app.use(function(req, res) {

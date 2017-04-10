@@ -19,6 +19,8 @@ export default function getCourses(state = initialState, action, user) {
     case 'CREATE_CLASS_FAILURE':
     case 'ENROLL_IN_CLASS_SUCCESS':
     case 'ENROLL_IN_CLASS_FAILURE':
+    case 'CREATE_VIDEO_SUCCESS':
+    case 'CREATE_VIDEO_FAILURE':
     default:
       return state;
   }
