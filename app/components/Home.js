@@ -148,14 +148,8 @@ class Home extends React.Component {
               </div>
               <div className="col col-sm-3 point-item">
                   <h1>Contact</h1>
-                  <p>Our work is viewe by thousands of students and the software gets hundreds of thousands
-                  of unqiue vistis and millions of API hits a year</p>
+                  <p> If you are interested in learning more about Hermione or are looking to use our service in a class feel free to contact us at <a href="mailto:hello@hermione.io">hello@hermione.io</a></p>
               </div>
-          </div>
-          <div className="row info-point">
-            <div className="container" style={ContactText}>
-              <p> If you are interested in learning more about Hermione or are looking to use our service in a class feel free to contact us at <a href="mailto:me@hermione.io">me@hermione.io</a></p>
-            </div>
           </div>
       </div>
 
