@@ -113,7 +113,7 @@ class Dashboard extends React.Component {
   getActiveVideo() {
     var course = this.getActiveCourse();
     if (course) {
-      var index = (this.state.video == -1) ? course.videos.length - 1 : this.state.video;
+      var index = (this.state.video == -1) ? course.videos.length - 1 : this.state.video - 1;
       var video = course.videos[index];
       if (video) {
         return video;

@@ -497,7 +497,7 @@ a {
   min-height: 300px;
   text-align: center;
   padding-bottom: 20px;
-  margin-top: 600px;
+  margin-top: 570px;
 }
 
 .sponsor {
@@ -571,6 +571,29 @@ a {
   vertical-align: top;
   float: right;
   padding: 20px;
+}
+
+.point-item {
+    background-color: #eee;
+    padding: 15px;
+    text-align: left;
+    margin: 15px;
+    float: none;
+    display: inline-block;
+}
+
+.point-container {
+    text-align: center;
+    padding: 40px 0;
+    padding-bottom: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.row-point > [class*='col-'] {
+    display: flex;
+    flex-direction: column;
 }
 
 #about {

@@ -89,16 +89,16 @@ exports.createClass = function(req, res, next) {
 
  exports.enrollInClass = function(req, res, next) {
  	console.log("enrollInClassCTRL " + JSON.stringify(req.body));
- 	Course.findOne({ code: req.body.code }, function(err) {
+ 	Course.findOne({ code: req.body.code }, function(err, course) {
  		if (err) {
  			res.send(404);
  			return;
  		}
 
- 		console.log(req.body.user);
+ 		course.students += 1;
+ 		course.save();
 
  		User.findOne({ _id: req.body.user._id}, function(err, user) {
- 			console.log(user);
 
 	 		if (!user.enrolled) {
 	 			user.enrolled = [];

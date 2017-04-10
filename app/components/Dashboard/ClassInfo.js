@@ -22,7 +22,7 @@ class ClassInfo extends React.Component {
           <div className="col col-md-4">
             <div className="sub-container inline align-center">
               <i className="material-icons">timeline</i>
-              <p className="sub-info"> Week 1 </p>
+              <p className="sub-info"> Week 13 </p>
             </div>
           </div>
 

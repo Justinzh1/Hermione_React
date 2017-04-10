@@ -4,6 +4,23 @@ import Messages from './Messages';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import {Grid, Row, Jumbotron, Col, Button} from 'react-bootstrap/lib';
 
+const ContactText = {
+  paddingTop: 0,
+  paddingLeft: 0
+}
+
+const SponsorHeader = {
+  backgroundColor: '#EEE',
+  margin: 0,
+  padding: "40px",
+  paddingTop: "60px",
+  textAlign: 'left'
+}
+
+const SponsorHText = {
+  margin: 0
+}
+
 class StudentButton extends React.Component {
   render() {
     return (
@@ -107,41 +124,40 @@ class Home extends React.Component {
           </div>
         </div>
 
+
         <div className="sponsors-container">
+          <div style={SponsorHeader}>
+            <h1 style={SponsorHText}> IN COLLABORATION WITH </h1>
+            <p> UC Berkeley, The Associated Students of University California Berkeley, and ASUC Office of the Chief Technology Officer </p>
+          </div>
           <image className="sponsor" src="images/cal.jpg" id="cal"/>
           <image className="sponsor" src="images/asuc.png" id="asuc"/>
           <image className="sponsor" src="images/octo.png" id="octo"/>
         </div>
 
-        <div className="info-container">
 
-          <div className="info-col" id="about">
-            <div className="info-header">
-              <h1> <span className="underline"> About </span> </h1>
-            </div>
-            <div className="info-content">
-              <p> Hermione is a UC Berkeley, ASUC sponsored project designed to streamline the lecture capturing process. Using computer vision and natural language processing, we provide a quick, effective way to record and transcribe lectures. </p>
+        <div className="points">
+          <div className="row point-container row-point">
+              <div className="col col-sm-3 point-item">
+                  <h1>About</h1>
+                  <p> Hermione is a UC Berkeley, ASUC sponsored project designed to streamline the lecture capturing process. Using computer vision and natural language processing, we provide a quick, effective way to record and transcribe lectures. </p>
+              </div>
+              <div className="col col-sm-3 point-item">
+                  <h1>Mission</h1>
+                  <p> Our goal is to provide cheap and efficient ways to record lectures. Due to growing demands for certain classes and limited classroom space, recording lectures allows more students take the classes they are interested in. </p>
+              </div>
+              <div className="col col-sm-3 point-item">
+                  <h1>Contact</h1>
+                  <p>Our work is viewe by thousands of students and the software gets hundreds of thousands
+                  of unqiue vistis and millions of API hits a year</p>
+              </div>
+          </div>
+          <div className="row info-point">
+            <div className="container" style={ContactText}>
+              <p> If you are interested in learning more about Hermione or are looking to use our service in a class feel free to contact us at <a href="mailto:me@hermione.io">me@hermione.io</a></p>
             </div>
           </div>
-
-          <div className="info-col" id="about">
-            <div className="info-header">
-              <h1> <span className="underline"> Mission </span> </h1>
-            </div>
-            <div className="info-content">
-              <p> Our goal is to provide cheap and efficient ways to record lectures. Due to growing demands for certain classes and limited classroom space, recording lectures allows more students take the classes they are interested in. </p>
-            </div>
-          </div>
-
-          <div className="info-col" id="about">
-            <div className="info-header">
-              <h1> <span className="underline"> Contact </span> </h1>
-            </div>
-            <div className="info-content">
-              <p> If you are interested in learning more about Hermione or are looking to use our service in a class feel free to contact us at hello@hermione.io </p>
-            </div>
-          </div>
-        </div>
+      </div>
 
       </div>
     );
