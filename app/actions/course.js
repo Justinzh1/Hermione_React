@@ -22,7 +22,6 @@ export function getUserCourses() {
 }
 
 export function fetchCourseSuccess(json) {
-  console.log("Success " + JSON.stringify(json.courses));
   return {
     type: 'GET_CLASSES_SUCCESS',
     courses: json.courses
@@ -30,7 +29,6 @@ export function fetchCourseSuccess(json) {
 }
 
 export function fetchCourseFailure(json) {
-  console.log("Failure " + json);
   return {
     type: 'GET_CLASSES_FAILURE',
   }
@@ -42,6 +40,7 @@ export function createCourse(input) {
     dispatch({
       type: 'CLEAR_MESSAGES'
     });
+    
     return fetch('/createClass', {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
@@ -59,14 +58,14 @@ export function createCourse(input) {
         return response.json().then((json) => {
           dispatch({
             type: 'CREATE_CLASS_SUCCESS',
-            messages: [json]
+            messages: [json],
           })
         });
       } else {
         return response.json().then((json) => {
           dispatch({
             type: 'CREATE_CLASS_FAILURE',
-            messages: [json]
+            messages: [json],
           })
         })
       }
@@ -91,14 +90,14 @@ export function enrollInClass(code) {
         return response.json().then((json) => {
           dispatch({
             type: 'ENROLL_IN_CLASS_SUCCESS',
-            messages: [json]
+            messages: [json],
           })
         });
       } else {
         return response.json().then((json) => {
           dispatch({
             type: 'ENROLL_IN_CLASS_FAILURE',
-            messages: [json]
+            messages: [json],
           })
         })
       }
@@ -106,11 +105,24 @@ export function enrollInClass(code) {
   };
 }
 
+export function createVideoSuccess(json) {
+  return {
+    type: 'CREATE_VIDEO_SUCCESS',
+  }
+}
+
+export function createVideoFailure(error) {
+  return {
+    type: 'CREATE_VIDEO_FAILURE',
+  }
+}
+
 export function createVideo(video, title, year) {
   return (dispatch, getState) => {
     dispatch({
       type: 'CLEAR_MESSAGES'
     });
+
     return fetch('/createVideo', {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
@@ -119,23 +131,9 @@ export function createVideo(video, title, year) {
         year: year,
         video: video
       })
-    }).then((response) => {
-      console.log("Response " + JSON.stringify(response));
-      if (response.ok) {
-        return response.json().then((json) => {
-          dispatch({
-            type: 'CREATE_VIDEO_SUCCESS',
-            messages: [json]
-          })
-        });
-      } else {
-        return response.json().then((json) => {
-          dispatch({
-            type: 'CREATE_VIDEO_FAILURE',
-            messages: [json]
-          })
-        })
-      }
     })
+    .then(response => response.json())
+    .then(json => dispatch(createVideoSuccess(json)))
+    .catch(error => dispatch(createVideoFailure(error)))
   }
 }

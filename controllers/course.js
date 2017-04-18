@@ -9,27 +9,6 @@ var Course = require('../models/Course');
 var User = require('../models/User');
 
 /**
- ** Course Schema
- **
-    title: String,
-    description: String,
-    professors: [{} name: String }],
-    videos: [{
-        title: String,
-        id: Number,
-        url: String,
-        date: Date,
-        timestamps: [{ time: Number, topic: String }],
-        length: Number
-    }],
-    code: String,
-    year: String,
-    students: Number,
-    week: Number,
-    start: Date
-*/
-
-/**
  * GET /getUserClasses
  * Returns list of classes user is enrolled in
  */
@@ -108,7 +87,6 @@ exports.createClass = function(req, res, next) {
  		});
 
  		res.send(200)
-
  	});
  }
 
@@ -132,7 +110,10 @@ exports.createVideo = function(req, res, next) {
 				timestamps: [],
 				length: req.body.video.length
 			});
-			course.save();
+			course.save(function(err) {
+				if (err) throw err;
+				res.send({message: "Controller Succesfully added video."});
+			});
 		});
 }
 

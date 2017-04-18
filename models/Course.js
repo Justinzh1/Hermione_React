@@ -10,7 +10,7 @@ var courseSchema = new mongoose.Schema({
         id: Number,
         url: String,
         date: Date,
-        timestamps: [{ time: Number, topic: String }],
+        timestamps: [{ time: Number, subject: String, parent: String }],
         length: Number
     }],
     code: String,

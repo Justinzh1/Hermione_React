@@ -13,12 +13,12 @@ const mapStateToProps = (state) => {
 };
 
 const VideoInfoContainer = {
-	border: '1.5px #eee solid',
 	margin: '0'
 }
 
 const VideoInfoHeaderContainer = {
 	border: '1.5px #eee solid',
+	borderLeft: '0',
 	margin: '0',
 	padding: '0'
 }
@@ -35,11 +35,12 @@ const VideoInfoHeader = {
 const TitleContainer = {
 	border: '1.5px #eee solid',
 	borderLeft: '0',
-	padding: '0 16px'
+	padding: '0 16px',
+	borderRight: '0'
 }
 
 const NoPadding = {
-	padding: '0',
+	padding: '0'
 }
 
 class VideoInfo extends React.Component {
@@ -60,8 +61,12 @@ class VideoInfo extends React.Component {
 								<h1 style={VideoInfoHeader}> {this.props.video.title} </h1>
 							</div>
 						</div>
-						<div className="col col-md-4">
-							<VideoTopics timestamps={this.props.video.timestamps} orientatoin={0} />
+						<div className="col col-md-4" style={NoPadding}>
+							<VideoTopics 
+								timestamps={this.props.video.timestamps}
+								orientation={0} 
+								jumpTo={(t) => this.props.jumpTo(t)}
+							/>
 						</div>
 					</div>
 				</div>

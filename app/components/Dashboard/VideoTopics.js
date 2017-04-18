@@ -12,7 +12,9 @@ const mapStateToProps = (state) => {
 
 const TopicsContainer = {
 	textAlign: 'left',
-	display: 'inline-block'
+	display: 'inline-block',
+	borderLeft: '1.5px #eee solid',
+	padding: '0 20px'
 }
 
 const HeaderText = {
@@ -50,7 +52,7 @@ class TopicItem extends React.Component {
 	}
 
 	handleClick() {
-
+		this.props.jumpTo(this.props.time);
 	}
 
 	render() {
@@ -58,8 +60,7 @@ class TopicItem extends React.Component {
 			<div
 			 onClick={() => this.handleClick()}
 			 style={TopicItemStyle}
-
-			  >
+			>
 				<p style={ItemText}> {this.props.name} </p>
 			</div>
 		)
@@ -110,10 +111,21 @@ class VideoTopics extends React.Component {
 		return curr;
 	}
 
+	jumpTo(t) {
+		this.props.jumpTo(t);
+	}
+
 	getTopics() {
 		const videoTopics = [];
 		this.props.timestamps.map((t,i) => {
-			var topicEntry = (<TopicItem name={t.subject} time={t.time} key={i}/>);
+			var topicEntry = (
+				<TopicItem 
+					name={t.subject} 
+					time={t.time} 
+					key={i}
+					jumpTo={(t) => this.jumpTo(t)}
+				/>
+			);
 			videoTopics.push(topicEntry);
 		});
 		return videoTopics;

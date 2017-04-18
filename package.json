@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "async": "^1.5.2",
+    "axios": "^0.16.1",
     "babel-core": "^6.7.2",
     "babel-loader": "^6.2.4",
     "babel-plugin-react-transform": "^2.0.2",
@@ -33,6 +34,7 @@
     "react-bootstrap": "^0.30.8",
     "react-cookie": "^0.4.5",
     "react-dom": "15.4.0",
+    "react-player": "^0.15.0",
     "react-redux": "4.4.1",
     "react-router": "^2.4.0",
     "react-tap-event-plugin": "^2.0.1",

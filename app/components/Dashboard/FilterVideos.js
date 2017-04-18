@@ -10,7 +10,8 @@ import {
   Dialog,
   FlatButton,
   Raisedbutton,
-  DatePicker
+  DatePicker,
+  Snackbar
 } from 'material-ui';
 
 import ActionSearch from 'material-ui/svg-icons/action/search';
@@ -19,7 +20,8 @@ import AvPlaylistAdd from 'material-ui/svg-icons/av/playlist-add';
 const mapStateToProps = (state) => {
   return {  
     messages: state.messages,
-    user: state.auth.user
+    user: state.auth.user,
+    message: state.course.message
   };
 };
 
@@ -27,6 +29,14 @@ const mapDispatchToProps = (dispatch) => {
   return {
     createVideo: (video, title, year) => dispatch(actions.course.createVideo(video, title, year))
   }
+}
+
+const FilterContainer = {
+  padding: "10px 20px"
+}
+
+const SubheaderStyle = {
+  paddingLeft: '20px'
 }
 
 const searchStyle={
@@ -53,7 +63,10 @@ const inputContainer={
 }
 
 const inputStyle={
-  
+  outline: 'none',
+  width: '100%',
+  padding: '5px 10px',
+  fontSize: '14px'
 }
 
 const dialogBody={
@@ -67,6 +80,7 @@ class FilterVideos extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      snack: false,
       clicked: false,
       open: false,
       video: {
@@ -100,15 +114,24 @@ class FilterVideos extends React.Component {
 
   handleFilter(e) {
     console.log(e.target.value);
+    this.props.filterVideos(e.target.value);
+  }
+
+  updateParent() {
+    this.props.rerender();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({snack: true})
   }
 
 
   // TODO
   // componentShouldUpdate after successfully updating/adding video at this stage
   submit() {
-    console.log("SUBMITTING " + this.state.video.date);
     if (this.props.title && this.props.year) {
       this.props.createVideo(this.state.video, this.props.title, this.props.year);
+      this.setState({open: false});
     }
   }
 
@@ -117,19 +140,41 @@ class FilterVideos extends React.Component {
     this.setState({clicked : flip});
   }
 
+  handleRequestClose() {
+    this.setState({snack : false});
+  }
+
+  updateMessage() {
+    if (this.props.message) {
+      return (
+        <Snackbar
+          open={this.state.snack}
+          message={this.props.message}
+          autoHideDuration={3000}
+          onRequestClose={() => this.handleRequestClose()}
+        />
+      )
+    }
+  }
+
   render() {
+    const message = this.updateMessage();
+
     var searchBar = (this.state.clicked) ? (
-      <div> 
-        <input 
-          style={inputStyle} 
-          placeholder={"Filter by"}
-          onChange={(e) => this.handleFilter(e)}
-        >
-        </input>
+      <div>
+        <div style={FilterContainer}> 
+          <input 
+            style={inputStyle} 
+            placeholder={"Filter by"}
+            onChange={(e) => this.handleFilter(e)}
+          >
+          </input>
+        </div>
+        <Subheader style={SubheaderStyle}> Videos </Subheader>
       </div>
     ) : (
       <div>
-        <Subheader> Videos </Subheader>
+        <Subheader style={SubheaderStyle}> Videos </Subheader>
       </div>
     );
       
@@ -150,6 +195,7 @@ class FilterVideos extends React.Component {
       <div
         style={inputContainer}
         >
+        {message}
         <Dialog
           title="Add a new Video"
           actions={actions}

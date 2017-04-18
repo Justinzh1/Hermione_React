@@ -10,7 +10,8 @@ import {
   Divider,
   Subheader,
   Avatar,
-  TextField
+  TextField,
+  Snackbar
 } from 'material-ui';
 
 import AvPlayArrow from 'material-ui/svg-icons/av/play-arrow';
@@ -87,7 +88,9 @@ class VideoList extends React.Component {
     super(props);
     this.state = {
       active: 0,
-      filtered: []
+      filtered: [],
+      related: [],
+      update: false
     }
   }
 
@@ -97,13 +100,22 @@ class VideoList extends React.Component {
     this.props.setActiveVideo(id - 1);
   }
 
-  getVideos() {
+  getVideos(courseVideos) {
     var videos = [];
     var icon = (<Avatar icon={<AvPlayArrow />}/>);
-    if (this.props.course && this.props.course.videos) {
-      this.props.course.videos.map((v, index) => {
+    if (courseVideos) {
+      courseVideos.map((v, index) => {
         var dnew = new Date(v.date);
         var d = v.date ? dnew.toLocaleDateString() : today.toLocaleDateString()
+        var topics = [];
+        v.timestamps.map((s,i) => {
+          topics.push(
+            <ListItem
+              key={i}
+              primaryText={s.subject}
+            />
+          );
+        });
         var item = (
           <ListItem
             color="white"
@@ -113,6 +125,7 @@ class VideoList extends React.Component {
             key={v.id}
             onClick={() => this.setActive(v.id)}
             style={listItemStyle}
+            nestedItems={topics}
           />);
         videos.push(item);
       });
@@ -123,17 +136,54 @@ class VideoList extends React.Component {
   }
 
   filterVideos(str) {
+    str = str.toLowerCase();
     const filtered = [];
+    const parents = [];
+    const related = [];
     this.props.course.videos.map((v, index) => {
+      const timestamps = v.timestamps;
+      for (var x = 0; x < timestamps.length; x++) {
+        var subj = timestamps[x].subject.toLowerCase();
+        if (subj.indexOf(str) != -1) {
+          filtered.push(v);
+          parents.push(timestamps[x].parent.toLowerCase());
+        }
+      }
     });
+    this.props.course.videos.map((v, index) => {
+      const timestamps = v.timestamps;
+      for (var x = 0; x < timestamps.length; x++) {
+        var parent = timestamps[x].parent.toLowerCase();
+        if (parents.includes(parent) && !filtered.includes(v)) {
+          related.push(v);
+        }
+      }
+    });
+    console.log(JSON.stringify(related));
+    if (str != '') {
+      this.setState({update: true, filtered: filtered, related: related});
+    } else {
+      this.setState({update: false});
+    }
   }
 
   render() {
-      var videos = this.getVideos();
-      videos = (videos) ? videos : (<div></div>);
+      var videos = (this.props.course) ? this.getVideos(this.props.course.videos) : (<div></div>);
+      var related = null;
+      if (this.state.update) {
+        videos = this.getVideos(this.state.filtered);
+        related = this.getVideos(this.state.related);
+      }
       var filter = (this.props.course) ? 
-        (<FilterVideos title={this.props.course.title} year={this.props.course.year}/>) :
-        (<FilterVideos />);
+        (<FilterVideos 
+          title={this.props.course.title}
+          year={this.props.course.year}
+          rerender={() => this.props.rerender()}
+          filterVideos={(str) => this.filterVideos(str)}
+        />) :
+        (<FilterVideos 
+          rerender={() => this.props.rerender()}
+          />);
 
       return (
         <div style={videoStyle}>
@@ -141,6 +191,8 @@ class VideoList extends React.Component {
             <div style={hideScrollBar}>
               {filter}
               {videos}
+              <Subheader> Related </Subheader>
+              {related}
             </div>
           </List>
         </div>

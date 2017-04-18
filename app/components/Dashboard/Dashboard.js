@@ -60,6 +60,10 @@ const scaledVideoContainer = {
   padding: '0'
 }
 
+const NoPadding = {
+padding: '0'
+}
+
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
@@ -135,19 +139,31 @@ class Dashboard extends React.Component {
       content = (
         <div>
           <div className="row">
-            <div className="col col-md-4">
+            <div className="col col-md-6" style={NoPadding}>
               <ClassList courses={this.props.courses} setActiveCourse={(x) => this.setActiveCourse(x)}/> 
             </div>
-            <div className="col col-md-8">
-              <VideoTopics timestamps={video.timestamps} orientation={1}/>
+            <div className="col col-md-6" style={NoPadding}>
+              <VideoTopics timestamps={video.timestamps} o={1}/>
             </div>
           </div>
           <div className="row">
-            <VideoPlayer video={video}/>
+            <VideoPlayer 
+              video={video}
+              orientation={0}
+              />
+            <div>
+            </div>
           </div>
           <div className="row">
             <div style={sidebarStyleScaled}>
-              <VideoList course={course} setActiveVideo={(x) => this.setActiveVideo(x)}/>
+              <VideoList 
+                course={course}
+                setActiveVideo={(x) => this.setActiveVideo(x)}
+                rerender={() => {
+                  console.log("Rerender");
+                  this.props.getUserCourses(); 
+                }}
+                />
             </div>
           </div>
         </div>
@@ -157,10 +173,20 @@ class Dashboard extends React.Component {
         <div className="row">
           <div className='col col-md-3' style={sidebarStyle}>
             <ClassList courses={this.props.courses} setActiveCourse={(x) => this.setActiveCourse(x)}/> 
-            <VideoList course={course} setActiveVideo={(x) => this.setActiveVideo(x)}/>
+            <VideoList 
+              course={course} 
+              setActiveVideo={(x) => this.setActiveVideo(x)}
+              rerender={() => {
+                console.log("Rerender");
+                this.props.getUserCourses(); 
+              }}
+              />
           </div>
           <div className="col col-md-9" style={videoContainerStyle}>
-            <VideoPlayer video={video}/>
+            <VideoPlayer 
+              video={video}
+              orientation={1}
+              />
           </div>
         </div>
       );
