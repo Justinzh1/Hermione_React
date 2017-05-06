@@ -15,7 +15,7 @@ const CoverCaption = {
 
 const InfoContainer = {
   padding: '100px 0',
-  paddingBottom: '50px',
+  paddingBottom: '0px',
   boxShadow: 'box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px'
 }
 
@@ -80,7 +80,7 @@ const SponsorStyle = {
 
 const SponsorItem = {
   textAlign: 'center',
-  marginBottom: '100px'
+  marginBottom: '70px'
 }
 
 const ASUCItem = {

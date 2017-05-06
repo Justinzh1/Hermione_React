@@ -2,6 +2,7 @@ import React from 'react';
 import { IndexLink, Link } from 'react-router';
 import { connect } from 'react-redux'
 import { logout } from '../actions/auth';
+import actions from '../actions/index';
 
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
@@ -19,6 +20,16 @@ class Login extends React.Component {
 	render() {
 		<FlatButton {...this.props} label="Login" />
 	};
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    logout: () => dispatch(actions.auth.logout())
+  }
+}
+
+const black = {
+  color: 'rgba(0, 0, 0, 0.87)'
 }
 
 var Logged = (props) => (
@@ -40,11 +51,11 @@ class LoggedIn extends React.Component {
 
 	handleLogout(event) {
 	    event.preventDefault();
-	    this.props.dispatch(logout());
+	    this.props.logout();
 	}
 
 	render() {
-  var color = (this.props.home) ? "white" : "#646464" ;
+  var color = (this.props.home) ? "white" : "white" ;
 		return (
 			<IconMenu
 		    	iconButtonElement={
@@ -61,12 +72,10 @@ class LoggedIn extends React.Component {
 				<Link to="/dashboard">
 					<MenuItem primaryText="Dashboard" />
 				</Link>
-				<Link to="#">
-					<MenuItem
-						primaryText="Sign Out"
-						onClick={this.handleLogout.bind(this)}
-					/>
-				</Link>
+				<MenuItem
+					primaryText={<a href="" style={black}> Sign Out </a>}
+					onClick={this.handleLogout.bind(this)}
+				/>
 			</IconMenu>
 		)
 	}
@@ -99,9 +108,9 @@ class Navbar extends React.Component {
 	}
 
 	render() {
-    var appbarColor = (global.window) ? global.window.location.href == (global.window.location.origin + '/') : true;
-    var style = (appbarColor) ? {color : "white" } : {color : "#646464"};
-		var logged = <LoggedIn home={this.props.home}/>
+    var appbarColor = (global.window) ? global.window.location.href == (global.window.location.origin + '/') : false;
+    var style = (appbarColor) ? {color : "white" } : {color : "white"};
+		var logged = <LoggedIn reload={() => this.render()} logout={() => this.props.logout()} home={this.props.home}/>
 		var signin = (<FlatButton label="Login" href="/login" style={style}/>)
 		var rightComponent = (this.props.token) ? logged : signin;
     var Navbar = (appbarColor) ?
@@ -116,10 +125,10 @@ class Navbar extends React.Component {
       (<AppBar
         className="appbar"
         title={<a style={style} className="navlink" href="/"> HERMIONE </a>}
-        style={{backgroundColor: "#EEEEEE", boxShadow: 'none', zIndex: 1, padding: '10px 35px'}}
+        style={{backgroundColor: "#003262", boxShadow: 'none', zIndex: 1, padding: '10px 35px'}}
         iconElementRight={rightComponent}
         iconElementLeft={<div></div>}
-        titleStyle={{fontFamily: "open sans", fontWeight: "600", fontSize: "22px", color: "#646464"}}
+        titleStyle={{fontFamily: "open sans", fontWeight: "600", fontSize: "22px", color: "white"}}
       />)
 		return (
 			<div>
@@ -137,4 +146,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(Navbar);
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

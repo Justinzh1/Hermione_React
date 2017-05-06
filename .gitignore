@@ -28,3 +28,8 @@ bower_components
 # OS metadata
 .DS_Store
 Thumbs.db
+
+# MongoDB
+dump
+data
+*.zip

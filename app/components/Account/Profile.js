@@ -57,7 +57,7 @@ class Profile extends React.Component {
       <div className="container">
         <Messages messages={this.props.messages}/>
         <h4>Profile Information</h4>
-        <form onSubmit={this.handleProfileUpdate.bind(this)}>
+        <form className="ProfileForm" onSubmit={this.handleProfileUpdate.bind(this)}>
           <label htmlFor="email">Email</label>
           <input type="email" name="email" id="email" value={this.state.email} onChange={this.handleChange.bind(this)}/>
           <label htmlFor="name">Name</label>

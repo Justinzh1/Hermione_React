@@ -8,6 +8,10 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 var injectTapEventPlugin = require("react-tap-event-plugin");
 injectTapEventPlugin();
 
+const ChildrenContainer = {
+  minHeight: 'calc(100vh - 115px)'
+}
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -18,7 +22,9 @@ class App extends React.Component {
       <MuiThemeProvider>
 	      <div>
 	        <Navbar home={this.props.home}/>
-	        {this.props.children}
+          <div style={ChildrenContainer}>
+	           {this.props.children}
+          </div>
 	        <Footer/>
 	      </div>
 	   </MuiThemeProvider>
