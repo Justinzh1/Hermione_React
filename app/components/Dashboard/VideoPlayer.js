@@ -8,7 +8,7 @@ import ReactPlayer from 'react-player';
 import VideoInfo from './VideoInfo';
 
 const mapStateToProps = (state) => {
-  return {  
+  return {
     messages: state.messages,
     user: state.auth.user
   };
@@ -49,7 +49,9 @@ class YouTube extends React.Component {
   }
 
   render() {
-    var src = "https://www.youtube.com/embed/" + this.props.video + "?autoplay=1";
+    var end = (this.props.seek != 0) ? ("?autoplay=1&start=" + this.props.seek) : '?start=1&autoplay=0';
+    var src = "https://www.youtube.com/embed/" + this.props.video + end;
+    console.log("src " + src);
     return (
       <iframe width="90%" height="420px"
         src={src}
@@ -71,17 +73,12 @@ class VideoPlayer extends React.Component {
       played: 0,
       loaded: 0,
       duration: 0,
-      playbackRate: 1.0
+      playbackRate: 1.0,
     }
-  }
-
-  setVideo(e) {
-    console.log("Ready");
   }
 
   onSeekChange(t) {
     this.setState({played : t});
-    console.log("Seeking to " + this.state.played);
   }
 
   render() {
@@ -89,37 +86,29 @@ class VideoPlayer extends React.Component {
       playing, volume,
       played, loaded, duration,
       playbackRate,
-      soundcloudConfig,
-      vimeoConfig,
       youtubeConfig,
-      fileConfig
     } = this.state
     const SEPARATOR = ' · ';
     const url = "https://www.youtube.com/watch?v=";
     var content = (this.props.video) ? (
       <div>
         <div style={videoStyle}>
-          <ReactPlayer 
-            ref={player => { this.player = player }}
-            className='react-player'
-            playing={this.state.playing}
-            url={url + this.props.video.url}
-            style={Player}
-            height={430}
-            width={"95%"}
-            onReady={() => console.log('ready')}
-            controls={true}
-            />
+          <YouTube
+            video={this.props.video.url}
+            style={videoStyle}
+            autoplay={true}
+            seek={this.state.played}
+          />
         </div>
       </div>
     ) : (<div style={videoHeader}></div>);
-    const info = (this.props.orientation) ? 
-      (<VideoInfo 
+    const info = (this.props.orientation) ?
+      (<VideoInfo
         video={this.props.video}
         jumpTo={(t) => this.onSeekChange(t)}
         />)
       :
-      (<div> </div>); 
+      (<div> </div>);
 
     return (
       <div style={videoContainer}>

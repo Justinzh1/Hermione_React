@@ -10,7 +10,7 @@ import VideoPlayer from './VideoPlayer';
 import VideoTopics from './VideoTopics';
 
 const mapStateToProps = (state) => {
-  return {  
+  return {
     messages: state.messages,
     user: state.auth.user,
     courses: state.course.courses
@@ -77,7 +77,8 @@ class Dashboard extends React.Component {
       loaded: false,
       course: '',
       width: '',
-      height: ''
+      height: '',
+      seek: 0
     }
   }
 
@@ -116,6 +117,7 @@ class Dashboard extends React.Component {
 
   getActiveVideo() {
     var course = this.getActiveCourse();
+    this.state.seek = 0;
     if (course) {
       var index = (this.state.video == -1) ? course.videos.length - 1 : this.state.video - 1;
       var video = course.videos[index];
@@ -128,7 +130,7 @@ class Dashboard extends React.Component {
 
   setActiveVideo(x) {
     var video = this.getActiveVideo();
-    this.setState({video : x, videoContent: video});
+    this.setState({video : x, videoContent : video, seek : 0});
   }
 
   render() {
@@ -140,28 +142,28 @@ class Dashboard extends React.Component {
         <div>
           <div className="row">
             <div className="col col-md-6" style={NoPadding}>
-              <ClassList courses={this.props.courses} setActiveCourse={(x) => this.setActiveCourse(x)}/> 
+              <ClassList courses={this.props.courses} setActiveCourse={(x) => this.setActiveCourse(x)}/>
             </div>
             <div className="col col-md-6" style={NoPadding}>
               <VideoTopics timestamps={video.timestamps} o={1}/>
             </div>
           </div>
           <div className="row">
-            <VideoPlayer 
+            <VideoPlayer
               video={video}
               orientation={0}
+              seek={this.state.seek}
               />
             <div>
             </div>
           </div>
           <div className="row">
             <div style={sidebarStyleScaled}>
-              <VideoList 
+              <VideoList
                 course={course}
                 setActiveVideo={(x) => this.setActiveVideo(x)}
                 rerender={() => {
-                  console.log("Rerender");
-                  this.props.getUserCourses(); 
+                  this.props.getUserCourses();
                 }}
                 />
             </div>
@@ -172,18 +174,18 @@ class Dashboard extends React.Component {
       content = (
         <div className="row">
           <div className='col col-md-3' style={sidebarStyle}>
-            <ClassList courses={this.props.courses} setActiveCourse={(x) => this.setActiveCourse(x)}/> 
-            <VideoList 
-              course={course} 
+            <ClassList courses={this.props.courses} setActiveCourse={(x) => this.setActiveCourse(x)}/>
+            <VideoList
+              course={course}
               setActiveVideo={(x) => this.setActiveVideo(x)}
               rerender={() => {
                 console.log("Rerender");
-                this.props.getUserCourses(); 
+                this.props.getUserCourses();
               }}
               />
           </div>
           <div className="col col-md-9" style={videoContainerStyle}>
-            <VideoPlayer 
+            <VideoPlayer
               video={video}
               orientation={1}
               />
@@ -196,7 +198,7 @@ class Dashboard extends React.Component {
           <div className='col col-md-3'>
           </div>
           <div className="col col-md-9" style={videoContainerStyle}>
-          </div>  
+          </div>
         </div>
       );
     } else {
@@ -205,7 +207,7 @@ class Dashboard extends React.Component {
           <div className='col col-md-3'>
           </div>
           <div className="col col-md-9" style={videoContainerStyle}>
-          </div>  
+          </div>
         </div>
       );
     }

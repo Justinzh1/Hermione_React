@@ -44,11 +44,12 @@ class LoggedIn extends React.Component {
 	}
 
 	render() {
+  var color = (this.props.home) ? "white" : "#646464" ;
 		return (
 			<IconMenu
 		    	iconButtonElement={
 					<IconButton>
-			      		<MoreVertIcon color="white"/>
+			      		<MoreVertIcon color={color}/>
 		      		</IconButton>
 			    }
 			    targetOrigin={{horizontal: 'right', vertical: 'bottom'}}
@@ -62,7 +63,7 @@ class LoggedIn extends React.Component {
 				</Link>
 				<Link to="#">
 					<MenuItem
-						primaryText="Sign Out" 
+						primaryText="Sign Out"
 						onClick={this.handleLogout.bind(this)}
 					/>
 				</Link>
@@ -98,24 +99,36 @@ class Navbar extends React.Component {
 	}
 
 	render() {
-		var logged = <LoggedIn/>
-		var signin = (<FlatButton label="Login" href="/login"/>)
+    var appbarColor = global.window.location.href == (global.window.location.origin + '/');
+    var style = (appbarColor) ? {color : "white" } : {color : "#646464"};
+		var logged = <LoggedIn home={this.props.home}/>
+		var signin = (<FlatButton label="Login" href="/login" style={style}/>)
 		var rightComponent = (this.props.token) ? logged : signin;
+    var Navbar = (appbarColor) ?
+      (<AppBar
+        className="appbar"
+        title={<a style={style} href="/"> HERMIONE </a>}
+        style={{backgroundColor: "rgba(0,0,0,0)", boxShadow: 'none', zIndex: 1, position: 'absolute', padding: '10px 35px'}}
+        iconElementRight={rightComponent}
+        iconElementLeft={<div></div>}
+        titleStyle={{fontFamily: "open sans", fontWeight: "600", fontSize: "32px", color: "white"}}
+      />) :
+      (<AppBar
+        className="appbar"
+        title={<a style={style} href="/"> HERMIONE </a>}
+        style={{backgroundColor: "#EEEEEE", boxShadow: 'none', zIndex: 1, padding: '10px 35px'}}
+        iconElementRight={rightComponent}
+        iconElementLeft={<div></div>}
+        titleStyle={{fontFamily: "open sans", fontWeight: "600", fontSize: "22px", color: "#646464"}}
+      />)
 		return (
 			<div>
-				<AppBar
-				className="appbar"
-			    title="HERMIONE"
-			    style={{backgroundColor: "#003262", zIndex: 1}}
-			    iconElementRight={rightComponent}
-			    iconElementLeft={<IconButton href="/"><NavigationHome /></IconButton>}
-			    titleStyle={{fontFamily: "lato", fontWeight: "300", fontSize: "20px"}}
-			  	/>
-		  	</div>
+				{Navbar}
+	  	</div>
 		)
 	}
 }
- 
+
 
 const mapStateToProps = (state) => {
   return {

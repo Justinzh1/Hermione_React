@@ -5,10 +5,15 @@ import { login } from '../../actions/auth';
 import { facebookLogin, twitterLogin, googleLogin, vkLogin, githubLogin } from '../../actions/oauth';
 import {Button} from 'react-bootstrap/lib';
 import Messages from '../Messages';
+import Clearbar from '../Clearbar';
 
 import {
   TextField,
 } from 'material-ui';
+
+const LoginContainer = {
+  paddingTop: '120px'
+}
 
 class Login extends React.Component {
   constructor(props) {
@@ -54,7 +59,7 @@ class Login extends React.Component {
 
   render() {
     return (
-      <div className="container">
+      <div className="container" style={LoginContainer}>
         <Messages messages={this.props.messages}/>
         <form onSubmit={this.handleLogin.bind(this)}>
           <h4>Log In</h4>

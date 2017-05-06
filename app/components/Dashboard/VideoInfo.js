@@ -20,7 +20,7 @@ const VideoInfoHeaderContainer = {
 	border: '1.5px #eee solid',
 	borderLeft: '0',
 	margin: '0',
-	padding: '0'
+	padding: '0',
 }
 
 const VideoInfoHeader = {
@@ -29,14 +29,14 @@ const VideoInfoHeader = {
 	fontWeight: '500',
 	margin: '0',
 	padding: '15px 0',
-	textAlign: 'left'
+	textAlign: 'left',
 }
 
 const TitleContainer = {
 	border: '1.5px #eee solid',
 	borderLeft: '0',
 	padding: '0 16px',
-	borderRight: '0'
+	borderRight: '0',
 }
 
 const NoPadding = {

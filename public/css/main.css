@@ -21,6 +21,42 @@ iframe {
   border: none;
 }
 
+.background-tint {
+  background-color: rgba(80, 79, 79, 0.3) !important;
+  background-blend-mode: multiply;
+}
+
+.background-tint-more {
+  background-color: rgba(80, 79, 79, 0.4) !important;
+  background-blend-mode: multiply;
+}
+
+.cover {
+  height: 100vh;
+  width: 100vw;
+  padding: 80px 20px;
+  background-image: url('/images/hand.jpeg');
+  background-position: top center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  position: relative;
+}
+
+.sponsorsheader {
+  text-align: center;
+  padding: 120px;
+  padding-bottom: 100px;
+  background-image: url('/images/fence.jpeg');
+
+  background-position: top center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
 .form-control:focus {
   outline: none;
   border: none;
@@ -30,12 +66,12 @@ iframe {
 
 input {
   box-shadow: none !important;
-  -webkit-box-shadow: none !important; 
+  -webkit-box-shadow: none !important;
 }
 
 input:focus {
   box-shadow: none !important;
-  -webkit-box-shadow: none !important; 
+  -webkit-box-shadow: none !important;
 }
 
 input[type=text]:focus {
@@ -54,20 +90,9 @@ button:focus {
 footer {
   display: inline-block;
   width: 100%;
-  color: white;
-  background-color: rgba(0,0,0,0.9);
-  height: 53px;
+  position: absolute;
   bottom: 0;
-  padding: 0 30px;
-  font-family: 'lato';
-  font-weight: 300;
   box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px;
-}
-
-footer p {
-  position: relative;
-  top: 50%;
-  transform: translateY(-50%);
 }
 
 label {
@@ -91,8 +116,8 @@ a {
 }
 
 /*
- * Generics 
- * 
+ * Generics
+ *
  */
 
  .appbar {
@@ -529,7 +554,7 @@ a {
   text-align: center;
 }
 
-.info-header h1 { 
+.info-header h1 {
   color: white;
 }
 

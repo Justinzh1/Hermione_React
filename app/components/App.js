@@ -8,13 +8,16 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 var injectTapEventPlugin = require("react-tap-event-plugin");
 injectTapEventPlugin();
 
-
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
     return (
       <MuiThemeProvider>
 	      <div>
-	        <Navbar/>
+	        <Navbar home={this.props.home}/>
 	        {this.props.children}
 	        <Footer/>
 	      </div>

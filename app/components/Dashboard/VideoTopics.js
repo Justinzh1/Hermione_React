@@ -3,6 +3,10 @@ import { connect } from 'react-redux'
 import RaisedButton from 'material-ui/RaisedButton';
 import Messages from '../Messages';
 
+import {
+  Chip
+} from 'material-ui';
+
 const mapStateToProps = (state) => {
   return {  
     messages: state.messages,
@@ -14,19 +18,20 @@ const TopicsContainer = {
 	textAlign: 'left',
 	display: 'inline-block',
 	borderLeft: '1.5px #eee solid',
-	padding: '0 20px'
+	padding: '0 20px',
+	paddingTop: '10px'
 }
 
 const HeaderText = {
-	paddingTop: '16px',
 	fontSize: '14px',
 	color: 'grey',
-	margin: '0'
+	margin: '0',
 }
 
 const TopicItemStyle = {
 	display: 'inline-block',
 	marginRight: '6px',
+	marginBottom: '6px'
 }
 
 const ItemText = {
@@ -39,8 +44,10 @@ const ItemText = {
 const CurrentText = {
 	fontSize: '24px',
 	fontWeight: '500',
-	margin: 0,
-	color: 'black'
+	margin: '0',
+	padding: '0',
+	color: 'black',
+	lineHeight: '0.8em'
 }
 
 class TopicItem extends React.Component {
@@ -57,12 +64,12 @@ class TopicItem extends React.Component {
 
 	render() {
 		return (
-			<div
-			 onClick={() => this.handleClick()}
+			<Chip
+			 onTouchTap={() => this.handleClick()}
 			 style={TopicItemStyle}
 			>
-				<p style={ItemText}> {this.props.name} </p>
-			</div>
+				{this.props.name}
+			</Chip>
 		)
 	}
 }
@@ -93,10 +100,14 @@ class VideoTopics extends React.Component {
 	getVertical(topics, current) {
 		return (
 			<div style={TopicsContainer}>
-				<p style={HeaderText}> Current </p>
-				{current}
-				<p style={HeaderText}> Topics </p>
-				{topics}
+				<div style={{paddingBottom: '16px'}}>
+					<p style={HeaderText}> Current </p>
+					{current}
+				</div>
+				<div style={{paddingBottom: '5px'}}>
+					<p style={HeaderText}> Topics </p>
+					{topics}
+				</div>
 			</div>
 		)
 	}
@@ -118,15 +129,17 @@ class VideoTopics extends React.Component {
 	getTopics() {
 		const videoTopics = [];
 		this.props.timestamps.map((t,i) => {
-			var topicEntry = (
-				<TopicItem 
-					name={t.subject} 
-					time={t.time} 
-					key={i}
-					jumpTo={(t) => this.jumpTo(t)}
-				/>
-			);
-			videoTopics.push(topicEntry);
+			if (i != this.state.active) {
+				var topicEntry = (
+					<TopicItem 
+						name={t.subject} 
+						time={t.time} 
+						key={i}
+						jumpTo={(t) => this.jumpTo(t)}
+					/>
+				);
+				videoTopics.push(topicEntry);
+			}
 		});
 		return videoTopics;
 	}

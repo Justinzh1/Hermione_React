@@ -12,7 +12,7 @@ export function getUserCourses() {
     const params = 'courses=' + encodeURI(getState().auth.user.enrolled);
 
     return fetch('/getUserClasses?' + params, {
-        method: 'GET', 
+        method: 'GET',
         headers: { 'Content-Type': 'application/json'}
       })
       .then(response => response.json())
@@ -40,7 +40,7 @@ export function createCourse(input) {
     dispatch({
       type: 'CLEAR_MESSAGES'
     });
-    
+
     return fetch('/createClass', {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },

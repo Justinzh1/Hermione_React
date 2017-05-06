@@ -2,6 +2,7 @@ import React from 'react';
 import { IndexRoute, Route } from 'react-router';
 import App from './components/App';
 import Home from './components/Home';
+import Main from './components/Main';
 import Contact from './components/Contact';
 import NotFound from './components/NotFound';
 import Login from './components/Account/Login';
@@ -28,21 +29,22 @@ export default function getRoutes(store) {
       type: 'CLEAR_MESSAGES'
     });
   };
+  const isHome = () => {
+    store.dispatch({
+      type: 'HOME_TRUE'
+    })
+  }
   return (
-    <Route path="/" component={App}>
-      <IndexRoute component={Home} onLeave={clearMessages}/>
-      <Route path="/contact" component={Contact} onLeave={clearMessages}/>
-      <Route path="/login" component={Login} onEnter={skipIfAuthenticated} onLeave={clearMessages}/>
-      <Route path="/signup" component={Signup} onEnter={skipIfAuthenticated} onLeave={clearMessages}/>
-      <Route path="/account" component={Profile} onEnter={ensureAuthenticated} onLeave={clearMessages}/>
-      <Route path="/forgot" component={Forgot} onEnter={skipIfAuthenticated} onLeave={clearMessages}/>
-      <Route path='/reset/:token' component={Reset} onEnter={skipIfAuthenticated} onLeave={clearMessages}/>
-      <Route path="/dashboard" onEnter={ensureAuthenticated} component={Dashboard} onLeave={clearMessages}/>
-      <Route path="*" component={NotFound} onLeave={clearMessages}/>
+    <Route path="/" component={App} home={true}>
+      <IndexRoute component={Main} onLeave={clearMessages} home={true}/>
+      <Route path="/contact" component={Contact} onLeave={clearMessages} home={false}/>
+      <Route path="/login" component={Login} onEnter={skipIfAuthenticated} onLeave={clearMessages} home={false}/>
+      <Route path="/signup" component={Signup} onEnter={skipIfAuthenticated} onLeave={clearMessages} home={false}/>
+      <Route path="/account" component={Profile} onEnter={ensureAuthenticated} onLeave={clearMessages} home={false}/>
+      <Route path="/forgot" component={Forgot} onEnter={skipIfAuthenticated} onLeave={clearMessages} home={false}/>
+      <Route path='/reset/:token' component={Reset} onEnter={skipIfAuthenticated} onLeave={clearMessages} home={false}/>
+      <Route path="/dashboard" onEnter={ensureAuthenticated} component={Dashboard} onLeave={clearMessages} home={false}/>
+      <Route path="*" component={NotFound} onLeave={clearMessages} home={false}/>
     </Route>
-
-    // Dashboard
-    // <Route path="/dashboard" component={Dashboard}>
-    // </Route>
   );
 }
