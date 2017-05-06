@@ -99,7 +99,7 @@ class Navbar extends React.Component {
 	}
 
 	render() {
-    var appbarColor = global.window.location.href == (global.window.location.origin + '/');
+    var appbarColor = (global.window) ? global.window.location.href == (global.window.location.origin + '/') : true;
     var style = (appbarColor) ? {color : "white" } : {color : "#646464"};
 		var logged = <LoggedIn home={this.props.home}/>
 		var signin = (<FlatButton label="Login" href="/login" style={style}/>)
@@ -107,7 +107,7 @@ class Navbar extends React.Component {
     var Navbar = (appbarColor) ?
       (<AppBar
         className="appbar"
-        title={<a style={style} href="/"> HERMIONE </a>}
+        title={<a style={style} className="navlink" href="/"> HERMIONE </a>}
         style={{backgroundColor: "rgba(0,0,0,0)", boxShadow: 'none', zIndex: 1, position: 'absolute', padding: '10px 35px'}}
         iconElementRight={rightComponent}
         iconElementLeft={<div></div>}
@@ -115,7 +115,7 @@ class Navbar extends React.Component {
       />) :
       (<AppBar
         className="appbar"
-        title={<a style={style} href="/"> HERMIONE </a>}
+        title={<a style={style} className="navlink" href="/"> HERMIONE </a>}
         style={{backgroundColor: "#EEEEEE", boxShadow: 'none', zIndex: 1, padding: '10px 35px'}}
         iconElementRight={rightComponent}
         iconElementLeft={<div></div>}

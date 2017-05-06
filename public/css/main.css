@@ -31,6 +31,10 @@ iframe {
   background-blend-mode: multiply;
 }
 
+.navlink:hover {
+  text-decoration: none;
+}
+
 .cover {
   height: 100vh;
   width: 100vw;
@@ -90,8 +94,6 @@ button:focus {
 footer {
   display: inline-block;
   width: 100%;
-  position: absolute;
-  bottom: 0;
   box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px;
 }
 
