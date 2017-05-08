@@ -4,23 +4,23 @@ import Messages from '../Messages';
 
 import {
   Card,
-  CardActions, 
-  CardHeader, 
-  CardMedia, 
-  CardTitle, 
-  CardText, 
-  IconMenu, 
-  MenuItem, 
+  CardActions,
+  CardHeader,
+  CardMedia,
+  CardTitle,
+  CardText,
+  IconMenu,
+  MenuItem,
   IconButton,
   RaisedButton,
-  Dialog, 
+  Dialog,
   FlatButton,
   TextField
 } from 'material-ui';
 
 import {
-  Button, 
-  ButtonToolbar, 
+  Button,
+  ButtonToolbar,
   DropdownButton,
   FormControl
 } from 'react-bootstrap/lib';
@@ -30,8 +30,10 @@ import CreateDialog from './CreateDialog';
 import EnrollDialog from './EnrollDialog';
 
 const mapStateToProps = (state) => {
-  return {  
-    messages: state.messages
+  console.log("State " + JSON.stringify(state.auth.user));
+  return {
+    messages: state.messages,
+    role: state.auth.user.professor
   };
 };
 
@@ -95,9 +97,9 @@ class ClassInfo extends React.Component {
             <div className="sub-container inline align-center">
               <i className="material-icons">face</i>
               <p className="sub-info"> 214 </p>
-            </div>       
+            </div>
           </div>
-        </div> 
+        </div>
       </div>
     )
   }
@@ -179,23 +181,31 @@ class ClassCard extends React.Component {
 
     var titleHeader = (course) ?
     (<div>
-      <CardHeader 
+      <CardHeader
         title={course.title}
         titleStyle={cardHeaderStyle}
         titleColor={"black"}
         subtitle={course.description}
         subtitleStyle={subtitleStyle}
       />
-      
+
     </div>
     ) :
-    (<CardHeader 
+    (<CardHeader
+      title="No Classes"
+      subtitle="Enroll in a class by clicking the three dots"
       titleStyle={cardHeaderStyle}
+      subtitleStyle={subtitleStyle}
       titleColor={"black"}
     />)
 
+
+    var CreateClass = (this.props.professor) ?
+      (<MenuItem primaryText="Create" onTouchTap={() => this.handleCreate()} />) :
+      (<div></div>);
+
     return (
-      <Card 
+      <Card
         style={Object.assign(cardStyle, {})}
 
       >
@@ -208,8 +218,8 @@ class ClassCard extends React.Component {
             closeDialog={() => this.handleClose()}
           />
 
-          <CreateDialog 
-            open={this.state.create} 
+          <CreateDialog
+            open={this.state.create}
             openDialog={() => this.handleCreate()}
             closeDialog={() => this.handleClose()}
           />
@@ -220,15 +230,15 @@ class ClassCard extends React.Component {
             targetOrigin={{horizontal: 'left', vertical: 'top'}}
           >
             {this.props.courses.map((c, index) => (
-              <MenuItem 
-                primaryText={c.title} 
-                key={index} 
+              <MenuItem
+                primaryText={c.title}
+                key={index}
                 onClick={() => this.activate(index)}
               />
             ))}
             <MenuItem primaryText="Enroll" onTouchTap={() => this.handleEnroll()} />
-            <MenuItem primaryText="Create" onTouchTap={() => this.handleCreate()} />
-          </IconMenu> 
+            {CreateClass}
+          </IconMenu>
         </div>
         {titleHeader}
         <div>
@@ -259,6 +269,7 @@ class ClassList extends React.Component {
 
   render() {
     const child = { width: `30px`, height: `100%`, backgroundColor: `green`}
+    console.log("props " + JSON.stringify(this.props));
 
     return (
       <div>
@@ -267,6 +278,7 @@ class ClassList extends React.Component {
           course={this.getActiveCourse()}
           courses={this.props.courses}
           setActiveCourse={(x) => this.setActiveCourse(x)}
+          professor={this.props.role}
           />
       </div>
     );

@@ -92,7 +92,9 @@ class Dashboard extends React.Component {
   }
 
   componentWillMount() {
-    this.props.getUserCourses();
+    if (this.props.user.enrolled) {
+      this.props.getUserCourses();
+    }
     this.updateDimensions();
   }
 

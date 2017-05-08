@@ -108,6 +108,7 @@ class VideoList extends React.Component {
   }
 
   getVideos(courseVideos, expanded) {
+    console.log("Search " + expanded + " State update " + this.state.update);
     var videos = [];
     var icon = (<Avatar icon={<AvPlayArrow />}/>);
     if (courseVideos) {
@@ -124,14 +125,13 @@ class VideoList extends React.Component {
             />
           );
         });
-        console.log("Filtered ? " + expanded + " Video: " + v.title);
         var item = (
           <ListItem
             color="white"
             leftAvatar={icon}
             primaryText={v.title}
             secondaryText={<p style={timeText}>{d}</p>}
-            key={index * 13}
+            key={index}
             id={v.id}
             onClick={() => this.setActive(v.id)}
             style={listItemStyle}

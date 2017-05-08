@@ -4,11 +4,12 @@ import moment from 'moment';
 import cookie from 'react-cookie';
 import { browserHistory } from 'react-router';
 
+
 // Sign in with Google
 export function googleLogin() {
   const google = {
     url: 'http://localhost:3000/auth/google',
-    clientId: '1084556350968-3qrqu3fqj2seestj3gt5ohf7d8qt4ph1.apps.googleusercontent.com',
+    clientId: '435893323323-97hp77hk303d5m54glch3a76ml2998uf',
     redirectUri: 'http://localhost:3000/auth/google/callback',
     authorizationUrl: 'https://accounts.google.com/o/oauth2/auth',
     scope: 'openid profile email',
@@ -198,8 +199,13 @@ function signIn({ token, user, window, interval, dispatch }) {
       token: token,
       user: user
     });
+
     cookie.save('token', token, { expires: moment().add(1, 'hour').toDate() });
     browserHistory.push('/');
+
+    console.log("USER " + JSON.stringify(user));
+    
+
     resolve({ window: window, interval: interval });
   });
 

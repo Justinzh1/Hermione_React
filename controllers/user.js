@@ -81,7 +81,8 @@ exports.signupPost = function(req, res, next) {
     user = new User({
       name: req.body.name,
       email: req.body.email,
-      password: req.body.password
+      password: req.body.password,
+      professor: false
     });
     user.save(function(err) {
     res.send({ token: generateToken(user), user: user });
@@ -161,7 +162,7 @@ exports.unlink = function(req, res, next) {
         break;
       case 'github':
           user.github = undefined;
-        break;      
+        break;
       default:
         return res.status(400).send({ msg: 'Invalid OAuth Provider' });
     }
@@ -333,7 +334,7 @@ exports.authGoogle = function(req, res) {
             gender: profile.gender,
             picture: profile.picture.replace('sz=50', 'sz=200'),
             location: profile.location,
-            google: profile.sub
+            google: profile.sub,
           });
           user.save(function(err) {
             res.send({ token: generateToken(user), user: user });

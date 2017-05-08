@@ -5,7 +5,7 @@ import actions from '../../actions/index';
 
 import {
   Divider,
-  TextField, 
+  TextField,
   Subheader,
   Dialog,
   FlatButton,
@@ -18,7 +18,7 @@ import ActionSearch from 'material-ui/svg-icons/action/search';
 import AvPlaylistAdd from 'material-ui/svg-icons/av/playlist-add';
 
 const mapStateToProps = (state) => {
-  return {  
+  return {
     messages: state.messages,
     user: state.auth.user,
     message: state.course.message
@@ -56,7 +56,7 @@ const searchBarContainer={
   display: 'inline-block'
 }
 
-const inputContainer={ 
+const inputContainer={
   display:"inline-block",
   width: "100%",
   left: "16px"
@@ -162,9 +162,9 @@ class FilterVideos extends React.Component {
 
     var searchBar = (this.state.clicked) ? (
       <div>
-        <div style={FilterContainer}> 
-          <input 
-            style={inputStyle} 
+        <div style={FilterContainer}>
+          <input
+            style={inputStyle}
             placeholder={"Filter by"}
             onChange={(e) => this.handleFilter(e)}
           >
@@ -177,7 +177,7 @@ class FilterVideos extends React.Component {
         <Subheader style={SubheaderStyle}> Videos </Subheader>
       </div>
     );
-      
+
     const actions = [
       <FlatButton
         label="Cancel"
@@ -190,6 +190,14 @@ class FilterVideos extends React.Component {
         onTouchTap={() => this.submit()}
       />,
     ];
+
+    const AddVideo = (this.props.user.professor) ?
+      (<AvPlaylistAdd
+        style={searchStyle}
+        hoverColor={"#003262"}
+        onClick={() => this.handleOpen()}
+      />) :
+      (<div></div>)
 
     return (
       <div
@@ -243,10 +251,10 @@ class FilterVideos extends React.Component {
             </div>
           </div>
           <div className="row" style={{paddingLeft: "12px", paddingTop: "24px", width: "70%"}}>
-              <DatePicker 
-                style={inputStyle} 
-                hintText="Date" 
-                mode="landscape" 
+              <DatePicker
+                style={inputStyle}
+                hintText="Date"
+                mode="landscape"
                 onChange={(e, d) => {
                   console.log("DATE " + d.toLocaleDateString());
                   this.updateForm("date", e, d.toLocaleDateString());
@@ -255,16 +263,12 @@ class FilterVideos extends React.Component {
           </div>
         </Dialog>
 
-        <ActionSearch 
+        <ActionSearch
           style={searchStyle}
           hoverColor={"#003262"}
           onClick={() => this.handleSearch()}
         />
-        <AvPlaylistAdd
-          style={searchStyle}
-          hoverColor={"#003262"}
-          onClick={() => this.handleOpen()}
-        />
+        {AddVideo}
         {searchBar}
       </div>
     );

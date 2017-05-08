@@ -99,7 +99,6 @@ class Navbar extends React.Component {
 
 	clickMenu() {
 		var flip = !this.state.clicked;
-		console.log("Clicked Menu! this.state.clicked = " + this.state.clicked);
 		this.setState({clicked : flip});
 	}
 
