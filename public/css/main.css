@@ -46,8 +46,8 @@ iframe {
   background-blend-mode: multiply;
 }
 
-.ProfileForm > input {
-  display: inline-block;
+.form-control {
+  border: 1px solid #eeeeee;
 }
 
 .navlink:hover {
