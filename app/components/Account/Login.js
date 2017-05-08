@@ -15,6 +15,21 @@ const LoginContainer = {
   paddingTop: '120px'
 }
 
+const styles = {
+  errorStyle: {
+    color: "#FDB515",
+  },
+  underlineStyle: {
+    borderColor: "#003262",
+  },
+  floatingLabelStyle: {
+    color: "#003262",
+  },
+  floatingLabelFocusStyle: {
+    color: "#003262"
+  }
+}
+
 class Login extends React.Component {
   constructor(props) {
     super(props);
@@ -65,6 +80,9 @@ class Login extends React.Component {
           <h4>Log In</h4>
           <div>
             <TextField
+              errorStyle={styles.errorStyle}
+              underlineFocusStyle={styles.underlineStyle}
+              floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
               hintText="email"
               floatingLabelText="email"
               onChange={(e,v) => this.updateForm("email", e, v)}
@@ -72,6 +90,9 @@ class Login extends React.Component {
           </div>
           <div>
             <TextField
+              errorStyle={styles.errorStyle}
+              underlineFocusStyle={styles.underlineStyle}
+              floatingLabelFocusStyle={styles.floatingLabelFocusStyle}
               hintText="password"
               floatingLabelText="password"
               type="password"

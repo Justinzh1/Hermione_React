@@ -79,14 +79,13 @@ class Profile extends React.Component {
           <h4>Profile Information</h4>
           <form className="form-group" onSubmit={this.handleProfileUpdate.bind(this)}>
             <div>
-              <label htmlFor="inputEmail" class="col-lg-2 control-label">Email</label>
+              <label htmlFor="inputEmail">Email</label>
               <input style={ProfileInput} className="form-control" type="email" name="email" id="email" value={this.state.email} onChange={this.handleChange.bind(this)}/>
             </div>
 
             <div>
-              <label htmlFor="Name" class="col-lg-2 control-label">Name</label>
-              <br />
-              <input style={ProfileInput} type="text" name="name" id="name" value={this.state.name} onChange={this.handleChange.bind(this)}/>
+              <label htmlFor="Name">Name</label>
+              <input style={ProfileInput} className="form-control" type="text" name="name" id="name" value={this.state.name} onChange={this.handleChange.bind(this)}/>
             </div>
 
             <Button type="submit">Update Profile</Button>

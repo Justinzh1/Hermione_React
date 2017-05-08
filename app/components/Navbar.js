@@ -108,7 +108,7 @@ class Navbar extends React.Component {
 	}
 
 	render() {
-    var appbarColor = (global.window) ? global.window.location.href == (global.window.location.origin + '/') : false;
+    var appbarColor = (global.window) ? global.window.location.href == (global.window.location.origin + '/') : true;
     var style = (appbarColor) ? {color : "white" } : {color : "white"};
 		var logged = <LoggedIn reload={() => this.render()} logout={() => this.props.logout()} home={this.props.home}/>
 		var signin = (<FlatButton label="Login" href="/login" style={style}/>)
