@@ -269,7 +269,7 @@ class ClassList extends React.Component {
 
   render() {
     const child = { width: `30px`, height: `100%`, backgroundColor: `green`}
-    console.log("props " + JSON.stringify(this.props));
+    console.log("props " + JSON.stringify(this.props.role));
 
     return (
       <div>
