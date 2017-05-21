@@ -95,11 +95,13 @@ input {
 input:focus {
   box-shadow: none !important;
   -webkit-box-shadow: none !important;
+  outline: none;
 }
 
 input[type=text]:focus {
   box-shadow: none;
   -webkit-box-shadow: none;
+  outline: none;
 }
 
 textarea:focus {
