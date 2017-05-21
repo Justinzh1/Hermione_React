@@ -13,6 +13,7 @@ const mapStateToProps = (state) => {
 var styles = {
   container: {
     border: '1.5px solid #EEEEEE',
+    borderLeft: '0',
     textAlign: 'center'
   },
   buttons: {

@@ -9,6 +9,7 @@ import IconButton from 'material-ui/IconButton';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 
 import EnrollDialog from './EnrollDialog';
+import CreateClassDialog from './CreateClassDialog';
 
 const mapStateToProps = (state) => {
   return {
@@ -167,6 +168,7 @@ class SidebarHeader extends React.Component {
     return (
       <div>
         <EnrollDialog flipEnroll={() => this.flipEnroll()} close={() => this.closeDialog()} active={this.state.enrollSwitch}/>
+        <CreateClassDialog flipCreateClass={() => this.flipCreateClass()} close={() => this.closeDialog()} active={this.state.createClassSwitch}/>
         <div style={styles.container}>
           {header}
           {desc}

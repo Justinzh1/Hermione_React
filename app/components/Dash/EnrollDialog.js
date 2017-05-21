@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import Messages from '../Messages';
 import PropTypes from 'prop-types';
 import onClickOutside from 'react-onclickoutside';
+import actions from '../../actions/index';
 
 const mapStateToProps = (state) => {
   return {
@@ -89,8 +90,8 @@ class Dialog extends React.Component {
       <div style={styles.module}>
           <div style={styles.moduleContainer}>
             <img style={styles.icon} src="/images/plus_square.png"/>
-            <h1 style={styles.title}> Create </h1>
-            <p style={styles.text}> Enroll in a class by entering the class code below </p>
+            <h1 style={styles.title}> Enroll </h1>
+            <p style={styles.text}> Enroll in a class by entering the class code below. </p>
             <input style={styles.input} onChange={(e,v) => this.updateForm(e,v)}></input>
             <br />
             <img style={styles.icon} src="/images/go.png"/>
