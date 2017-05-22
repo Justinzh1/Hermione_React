@@ -30,7 +30,7 @@ var User = require('../models/User');
  }
 
 
-/** 
+/**
  * POST /createClass
  * Creates a new class
  */
@@ -38,7 +38,8 @@ var User = require('../models/User');
 exports.createClass = function(req, res, next) {
 	Course.findOne(
 		{ $or: [
-			{ title: req.body.title, year: req.body.year }
+			{ title: req.body.title, year: req.body.year },
+      { code: req.body.code }
 		]}, 
 		function(err, course) {
 		    if (course) {
@@ -61,7 +62,7 @@ exports.createClass = function(req, res, next) {
   		});
 }
 
-/** 
+/**
  * POST /enroll
  * Enrolls in a Class
  */
@@ -90,7 +91,7 @@ exports.createClass = function(req, res, next) {
  	});
  }
 
-/** 
+/**
  * POST /video
  * Adds a new video to a class
  */

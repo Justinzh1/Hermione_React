@@ -10,6 +10,7 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 
 import EnrollDialog from './EnrollDialog';
 import CreateClassDialog from './CreateClassDialog';
+import CreateVideoDialog from './CreateVideoDialog';
 
 const mapStateToProps = (state) => {
   return {
@@ -93,8 +94,13 @@ class SidebarHeader extends React.Component {
       searchSwitch: 0,
       enrollSwitch: 0,
       createClassSwitch: 0,
-      createVideoSwitch: 0
+      createVideoSwitch: 0,
+      snack: false
     }
+  }
+
+  setActiveCourse(i) {
+    this.props.setActiveCourse(i);
   }
 
   flipSearch() {
@@ -126,6 +132,18 @@ class SidebarHeader extends React.Component {
     this.props.filterVideos(e.target.value);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.messages) {
+      this.setState({
+        searchSwitch: 0,
+        enrollSwitch: 0,
+        createClassSwitch: 0,
+        createVideoSwitch: 0,
+        snack: true
+      })
+    }
+  }
+
   render() {
     var header = (this.props.course) ?
       (<h1 style={styles.header}> {this.props.course.title} <small style={styles.small}> {this.props.course.year} </small></h1>)  :
@@ -147,6 +165,25 @@ class SidebarHeader extends React.Component {
       </IconMenu>) :
       (<img style={{padding: 0}} style={styles.icon} src='images/plus.png'></img>);
 
+    var classes = [];
+    if (this.props.courses) {
+      for (var i = 0; i < this.props.courses.length; i++) {
+        classes.push(
+          (<MenuItem key={i} onClick={() => this.setActiveCourse(i)} primaryText={this.props.courses[i].title} />)
+        );
+      }
+    }
+
+    var select = (this.props.courses) ?
+      (<IconMenu
+        iconButtonElement={<IconButton style={{padding: 0}} iconStyle={styles.icon}><img src='images/list.png'></img></IconButton>}
+        anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+        targetOrigin={{horizontal: 'left', vertical: 'top'}}
+        >
+          {classes}
+      </IconMenu>) :
+    (<img style={{padding: 0}} style={styles.icon} src='images/list.png'></img>);
+
     var search = (this.state.searchSwitch) ?
       (<div style={styles.search}>
         <input
@@ -167,8 +204,9 @@ class SidebarHeader extends React.Component {
 
     return (
       <div>
-        <EnrollDialog flipEnroll={() => this.flipEnroll()} close={() => this.closeDialog()} active={this.state.enrollSwitch}/>
-        <CreateClassDialog flipCreateClass={() => this.flipCreateClass()} close={() => this.closeDialog()} active={this.state.createClassSwitch}/>
+        <EnrollDialog flipEnroll={() => this.flipEnroll()} close={() => this.closeDialog()} active={this.state.enrollSwitch} snack={this.state.snack}/>
+        <CreateClassDialog flipCreateClass={() => this.flipCreateClass()} close={() => this.closeDialog()} active={this.state.createClassSwitch} snack={this.state.snack}/>
+        <CreateVideoDialog flipCreateVideo={() => this.flipCreateVideo()} close={() => this.closeDialog()} active={this.state.createVideoSwitch} snack={this.state.snack}/>
         <div style={styles.container}>
           {header}
           {desc}
@@ -181,7 +219,7 @@ class SidebarHeader extends React.Component {
               >
             </img>
           </div>
-          <img style={styles.icon} src='images/list.png'></img>
+          {select}
           {add}
         </div>
         {search}

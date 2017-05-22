@@ -3,6 +3,14 @@ import cookie from 'react-cookie';
 import fetch from 'isomorphic-fetch';
 import { browserHistory } from 'react-router';
 
+export function clearMessages() {
+  return (dispatch) => {
+    dispatch({
+      type: 'CLEAR_CLASS_MESSAGES'
+    });
+  }
+}
+
 export function getUserCourses() {
   return (dispatch, getState) => {
     dispatch({
@@ -58,14 +66,14 @@ export function createCourse(input) {
         return response.json().then((json) => {
           dispatch({
             type: 'CREATE_CLASS_SUCCESS',
-            messages: [json],
+            messages: ["Class was created successfully"],
           })
         });
       } else {
         return response.json().then((json) => {
           dispatch({
             type: 'CREATE_CLASS_FAILURE',
-            messages: [json],
+            messages: ["Please check fields and try again."],
           })
         })
       }

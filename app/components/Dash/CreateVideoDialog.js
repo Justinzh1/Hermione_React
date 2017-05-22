@@ -6,19 +6,22 @@ import onClickOutside from 'react-onclickoutside';
 import actions from '../../actions/index';
 
 import {
+  DatePicker,
   Snackbar
 } from 'material-ui';
 
+
 const mapStateToProps = (state) => {
   return {
+    messages: state.messages,
     user: state.auth.user,
-    message: state.course.message
+    input: state.input
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    createNewCourse: (input) => dispatch(actions.course.createCourse(input)),
+    createVideo: (video, title, year) => dispatch(actions.course.createVideo(video, title, year)),
     clearMessages: () => dispatch(actions.course.clearMessages())
   }
 }
@@ -72,6 +75,14 @@ var styles = {
     padding: '5px 10px',
     display: 'inline-block'
   },
+  dateInput: {
+    width: '200px',
+    display:'inline-block'
+  },
+  dateInner: {
+    width: '200px',
+    boxShadow: '0',
+  },
   label: {
     textTransform: 'uppercase',
     color: 'black',
@@ -97,87 +108,69 @@ class Dialog extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      snack: false,
+      clicked: false,
       open: false,
-      title: '',
-      description: '',
-      professors: [],
-      videos: [],
-      code: '',
-      year: '',
-      students: 0,
-      week: 0,
-      date: ''
+      date: false,
+      video: {
+        title: '',
+        id: '',
+        url: '',
+        len: '',
+        date: ''
+      }
     }
+  }
+
+  disableDate() {
+    this.setState({date : true});
+  }
+
+  enableDate() {
+    this.setState({date : false});
+  }
+
+  handleClick() {
+    var flip = !this.state.clicked;
+    this.setState({clicked : flip});
+  }
+
+  handleOpen() {
+    this.setState({open: true});
+  }
+
+  handleClose() {
+    this.setState({open: false});
   }
 
   updateForm(key, event, value) {
-    var entry = {}
-    entry[key] = event.target.value;
+    var entry = this.state.video;
+    entry[key] = value;
     this.setState(entry);
   }
 
-  handleSubmit() {
-    this.props.createNewCourse(this.state);
+  handleFilter(e) {
+    console.log(e.target.value);
+    this.props.filterVideos(e.target.value);
   }
 
-  handleClickOutside() {
-    this.props.close();
-  }
-
-  render() {
-    return (
-      <div style={styles.module}>
-          <div style={styles.moduleContainer}>
-            <img style={styles.icon} src="/images/plus_square.png"/>
-            <h1 style={styles.title}> Class </h1>
-            <p style={styles.text}> Create in a class by fillowing out the information below. </p>
-            <div style={styles.inputContainer}>
-              <div style={styles.row}>
-                <p style={styles.label}>class name</p>
-                <input style={styles.input} onChange={(e,v) => this.updateForm("title", e, v)}></input>
-              </div>
-              <div style={styles.row}>
-                <p style={styles.label}>description</p>
-                <input style={styles.input} onChange={(e,v) => this.updateForm("description", e, v)}></input>
-              </div>
-              <div style={styles.row}>
-                <p style={styles.label}>class code</p>
-                <input style={styles.input} onChange={(e,v) => this.updateForm("code", e, v)}></input>
-              </div>
-              <div style={styles.row}>
-                <p style={styles.label}>professors</p>
-                <input style={styles.input} onChange={(e,v) => this.updateForm("professors", e, v)}></input>
-              </div>
-              <div style={styles.row}>
-                <p style={styles.label}>year</p>
-                <input style={styles.input} onChange={(e,v) => this.updateForm("year", e, v)}></input>
-              </div>
-            </div>
-            <br />
-            <img style={styles.icon} src="/images/go.png" onClick={() => this.handleSubmit()}/>
-          </div>
-      </div>
-    );
-  }
-}
-
-Dialog = onClickOutside(Dialog);
-
-class CreateClassDialog extends React.Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      snackbar: false
-    }
+  updateParent() {
+    this.props.rerender();
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log("Received props " + nextProps.message);
-    if (nextProps.message) {
-      this.setState({
-        snackbar: true
-      })
+    this.setState({snack: true})
+  }
+
+  handleClickOutside() {
+    if (!this.state.date) {
+      this.props.close();
+    }
+  }
+
+  handleSubmit() {
+    if (this.props.title && this.props.year) {
+      this.props.createVideo(this.state.video, this.props.title, this.props.year);
     }
   }
 
@@ -189,12 +182,69 @@ class CreateClassDialog extends React.Component {
   }
 
   render() {
+    return (
+      <div style={styles.module}>
+          <div style={styles.moduleContainer}>
+            <img style={styles.icon} src="/images/plus_square.png"/>
+            <h1 style={styles.title}> Video </h1>
+            <p style={styles.text}> Create in a class by fillowing out the information below. </p>
+            <div style={styles.inputContainer}>
+              <div style={styles.row}>
+                <p style={styles.label}>video title</p>
+                <input style={styles.input} onChange={(e,v) => this.updateForm("title", e, v)}></input>
+              </div>
+              <div style={styles.row}>
+                <p style={styles.label}>description</p>
+                <input style={styles.input} onChange={(e,v) => this.updateForm("description", e, v)}></input>
+              </div>
+              <div style={styles.row}>
+                <p style={styles.label}>video id</p>
+                <input style={styles.input} onChange={(e,v) => this.updateForm("code", e, v)}></input>
+              </div>
+              <div style={styles.row}>
+                <p style={styles.label}>length</p>
+                <input style={styles.input} onChange={(e,v) => this.updateForm("professors", e, v)}></input>
+              </div>
+              <div style={styles.row}>
+                <p style={styles.label}>date</p>
+                <DatePicker
+                  style={styles.dateInput}
+                  textFieldStyle={styles.dateInner}
+                  hintText=""
+                  mode="landscape"
+                  onClick={() => this.disableDate()}
+                  onChange={(e, d) => {
+                    this.updateForm("date", e, d.toLocaleDateString());
+                    this.enableDate();
+                  }}
+                  onDismiss={() => this.enableDate()}
+                />
+              </div>
+            </div>
+            <br />
+            <img style={styles.icon} src="/images/go.png" onClick={() => handleSubmit()}/>
+          </div>
+      </div>
+    );
+  }
+}
+
+Dialog = onClickOutside(Dialog);
+
+class CreateVideoDialog extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      snackbar: false
+    }
+  }
+
+  render() {
     var module = (this.props.active) ?
       (<div style={styles.container}>
         <Dialog
-          createNewCourse={(c) => this.props.createNewCourse(c)}
+          createClass={(c) => this.props.createClass}
           close={() => this.props.close()}
-          active={this.state.dialog}
           />
       </div>) :
       (<div></div>);
@@ -213,4 +263,4 @@ class CreateClassDialog extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CreateClassDialog);
+export default connect(mapStateToProps, mapDispatchToProps)(CreateVideoDialog);

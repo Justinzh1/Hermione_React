@@ -177,7 +177,9 @@ class Sidebar extends React.Component {
       <div style={styles.container}>
         <SidebarHeader
           course={this.props.course}
+          courses={this.props.courses}
           filterVideos={(str) => this.filterVideos(str)}
+          setActiveCourse={(i) => this.setActiveCourse(i)}
           />
         <div style={styles.video}>
           <List className="list" style={styles.list}>

@@ -135,7 +135,11 @@ class Dashboard extends React.Component {
 
     var side = (this.state.width > 900) ?
       (<div style={styles.side}>
-        <Sidebar course={course}/>
+        <Sidebar
+          course={course}
+          courses={this.props.courses}
+          setActiveCourse={(i) => this.setActiveCourse(i)}
+          />
       </div>) :
       (<div></div>);
 
