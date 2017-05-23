@@ -63,6 +63,10 @@ class Dashboard extends React.Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    console.log("Dashboard receiving props " + JSON.stringify(nextProps.courses));
+  }
+
   updateDimensions() {
     if (typeof(global.window) !== 'undefined') {
       var w = global.window,
@@ -73,7 +77,7 @@ class Dashboard extends React.Component {
   }
 
   componentWillMount() {
-    if (this.props.user.enrolled) {
+    if (this.props.user && this.props.user.enrolled) {
       this.props.getUserCourses();
     }
     this.updateDimensions();
@@ -94,8 +98,10 @@ class Dashboard extends React.Component {
   }
 
   setActiveCourse(x) {
-    var course = this.getActiveCourse();
-    this.setState({active : x, video: 0, course: course});
+    console.log(x);
+    var course = this.props.courses[x];
+    this.setState({active : x, course: course});
+    
   }
 
   getActiveVideo() {

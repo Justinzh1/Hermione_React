@@ -95,19 +95,15 @@ export function enrollInClass(code) {
       })
     }).then((response) => {
       if (response.ok) {
-        return response.json().then((json) => {
-          dispatch({
-            type: 'ENROLL_IN_CLASS_SUCCESS',
-            messages: [json],
-          })
+        dispatch({
+          type: 'ENROLL_IN_CLASS_SUCCESS',
+          messages: ["Class was enrolled in successfull"],
         });
       } else {
-        return response.json().then((json) => {
-          dispatch({
-            type: 'ENROLL_IN_CLASS_FAILURE',
-            messages: [json],
-          })
-        })
+        dispatch({
+          type: 'ENROLL_IN_CLASS_FAILURE',
+          messages: ["Please check code and try again"],
+        });
       }
     });
   };

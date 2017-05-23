@@ -89,8 +89,8 @@ class Sidebar extends React.Component {
   }
 
   setActive(id) {
-    this.setState({active : id});
     this.props.setActiveVideo(id - 1);
+    this.setState({active : id});
   }
 
   getVideos(courseVideos, expanded) {
@@ -179,7 +179,7 @@ class Sidebar extends React.Component {
           course={this.props.course}
           courses={this.props.courses}
           filterVideos={(str) => this.filterVideos(str)}
-          setActiveCourse={(i) => this.setActiveCourse(i)}
+          setActiveCourse={(i) => this.props.setActiveCourse(i)}
           />
         <div style={styles.video}>
           <List className="list" style={styles.list}>

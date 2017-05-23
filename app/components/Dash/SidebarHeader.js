@@ -163,16 +163,20 @@ class SidebarHeader extends React.Component {
           <MenuItem onClick={() => this.flipCreateClass()} primaryText="Create Class" />
           <MenuItem onClick={() => this.flipCreateVideo()} primaryText="Create Video" />
       </IconMenu>) :
-      (<img style={{padding: 0}} style={styles.icon} src='images/plus.png'></img>);
+      (<img style={{padding: 0}} style={styles.icon} src='images/plus.png' onClick={() => this.flipEnroll()}></img>);
 
     var classes = [];
-    if (this.props.courses) {
-      for (var i = 0; i < this.props.courses.length; i++) {
-        classes.push(
-          (<MenuItem key={i} onClick={() => this.setActiveCourse(i)} primaryText={this.props.courses[i].title} />)
-        );
-      }
-    }
+    this.props.courses.map((c, i) => {
+      var item = (
+        <MenuItem 
+          key={i} 
+          onClick={() => {
+            this.setActiveCourse(i);
+          }}
+          primaryText={c.title} 
+          />);
+      classes.push(item);
+    });
 
     var select = (this.props.courses) ?
       (<IconMenu
@@ -183,6 +187,8 @@ class SidebarHeader extends React.Component {
           {classes}
       </IconMenu>) :
     (<img style={{padding: 0}} style={styles.icon} src='images/list.png'></img>);
+
+    var suggestedID = (this.props.course && this.props.course.videos) ? (this.props.course.videos.length + 1) : 0;
 
     var search = (this.state.searchSwitch) ?
       (<div style={styles.search}>
@@ -202,11 +208,33 @@ class SidebarHeader extends React.Component {
         </input>
       </div>);
 
+    var title = (this.props.course) ? this.props.course.title : '';
+    var year = (this.props.course) ? this.props.course.year : '';
+
     return (
       <div>
-        <EnrollDialog flipEnroll={() => this.flipEnroll()} close={() => this.closeDialog()} active={this.state.enrollSwitch} snack={this.state.snack}/>
-        <CreateClassDialog flipCreateClass={() => this.flipCreateClass()} close={() => this.closeDialog()} active={this.state.createClassSwitch} snack={this.state.snack}/>
-        <CreateVideoDialog flipCreateVideo={() => this.flipCreateVideo()} close={() => this.closeDialog()} active={this.state.createVideoSwitch} snack={this.state.snack}/>
+        <EnrollDialog
+          flipEnroll={() => this.flipEnroll()}
+          close={() => this.closeDialog()}
+          active={this.state.enrollSwitch}
+          snack={this.state.snack}
+          />
+        <CreateClassDialog
+          flipCreateClass={() => this.flipCreateClass()}
+          close={() => this.closeDialog()}
+          active={this.state.createClassSwitch}
+          snack={this.state.snack}
+          />
+        <CreateVideoDialog
+          flipCreateVideo={() => this.flipCreateVideo()}
+          close={() => this.closeDialog()}
+          active={this.state.createVideoSwitch}
+          snack={this.state.snack}
+          suggestedID={suggestedID}
+          title={title}
+          year={year}
+          />
+
         <div style={styles.container}>
           {header}
           {desc}

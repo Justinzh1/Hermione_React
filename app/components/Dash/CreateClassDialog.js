@@ -173,7 +173,6 @@ class CreateClassDialog extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log("Received props " + nextProps.message);
     if (nextProps.message) {
       this.setState({
         snackbar: true

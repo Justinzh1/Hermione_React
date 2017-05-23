@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import onClickOutside from 'react-onclickoutside';
 import actions from '../../actions/index';
 
+import ReactTooltip from 'react-tooltip';
 import {
   DatePicker,
   Snackbar
@@ -143,14 +144,24 @@ class Dialog extends React.Component {
     this.setState({open: false});
   }
 
+  youtube_parser(url) {
+    var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/;
+    var match = url.match(regExp);
+    return (match&&match[7].length==11)? match[7] : false;
+  }
+
   updateForm(key, event, value) {
     var entry = this.state.video;
-    entry[key] = value;
-    this.setState(entry);
+    if (key != 'url') {
+      entry[key] = value;
+    } else {
+      value = this.youtube_parser(value);
+      entry[key] = value;
+    }
+    this.setState({video : entry});
   }
 
   handleFilter(e) {
-    console.log(e.target.value);
     this.props.filterVideos(e.target.value);
   }
 
@@ -169,9 +180,8 @@ class Dialog extends React.Component {
   }
 
   handleSubmit() {
-    if (this.props.title && this.props.year) {
-      this.props.createVideo(this.state.video, this.props.title, this.props.year);
-    }
+    console.log("Submit " + this.props.title + " " + this.props.year + " " + this.state.video);
+    this.props.createVideo(this.state.video, this.props.title, this.props.year);
   }
 
   handleRequestClose() {
@@ -182,8 +192,10 @@ class Dialog extends React.Component {
   }
 
   render() {
+    var suggestedID = "Suggested ID: " + this.props.suggestedID;
     return (
       <div style={styles.module}>
+        <ReactTooltip place="left" type="dark" effect="solid" />
           <div style={styles.moduleContainer}>
             <img style={styles.icon} src="/images/plus_square.png"/>
             <h1 style={styles.title}> Video </h1>
@@ -191,23 +203,24 @@ class Dialog extends React.Component {
             <div style={styles.inputContainer}>
               <div style={styles.row}>
                 <p style={styles.label}>video title</p>
-                <input style={styles.input} onChange={(e,v) => this.updateForm("title", e, v)}></input>
+                <input style={styles.input} onChange={(e,v) => this.updateForm("title", e, e.target.value)}></input>
               </div>
               <div style={styles.row}>
-                <p style={styles.label}>description</p>
-                <input style={styles.input} onChange={(e,v) => this.updateForm("description", e, v)}></input>
+                <p style={styles.label} data-tip={suggestedID} >video id</p>
+                <input style={styles.input} onChange={(e,v) => this.updateForm("id", e, e.target.value)}></input>
               </div>
               <div style={styles.row}>
-                <p style={styles.label}>video id</p>
-                <input style={styles.input} onChange={(e,v) => this.updateForm("code", e, v)}></input>
+                <p style={styles.label} data-tip={suggestedID}>url</p>
+                <input style={styles.input} onChange={(e,v) => this.updateForm("url", e, e.target.value)}></input>
               </div>
               <div style={styles.row}>
                 <p style={styles.label}>length</p>
-                <input style={styles.input} onChange={(e,v) => this.updateForm("professors", e, v)}></input>
+                <input style={styles.input} onChange={(e,v) => this.updateForm("len", e, e.target.value)}></input>
               </div>
               <div style={styles.row}>
                 <p style={styles.label}>date</p>
                 <DatePicker
+                  id={"picker"}
                   style={styles.dateInput}
                   textFieldStyle={styles.dateInner}
                   hintText=""
@@ -222,7 +235,7 @@ class Dialog extends React.Component {
               </div>
             </div>
             <br />
-            <img style={styles.icon} src="/images/go.png" onClick={() => handleSubmit()}/>
+            <img style={styles.icon} src="/images/go.png" onClick={() => this.handleSubmit()}/>
           </div>
       </div>
     );
@@ -243,8 +256,11 @@ class CreateVideoDialog extends React.Component {
     var module = (this.props.active) ?
       (<div style={styles.container}>
         <Dialog
-          createClass={(c) => this.props.createClass}
+          createVideo={(c) => this.props.createVideo(c)}
           close={() => this.props.close()}
+          suggestedID={this.props.suggestedID}
+          year={this.props.year}
+          title={this.props.title}
           />
       </div>) :
       (<div></div>);
