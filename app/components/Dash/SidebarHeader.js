@@ -71,12 +71,12 @@ var styles = {
     transition: '500ms',
   },
   input: {
-    fontSize: '16px',
+    fontSize: '14px',
     width: '100%',
     border: 'none',
     borderTop: '1.5px #EEEEEE solid',
-    borderRight: '1px #EEEEEE solid',
-    padding: '5px 15px',
+    padding: '2.5px 24px',
+    paddingTop:'5px',
     ':focus': {
       boxShadow: '0 !important',
       outline: '0 !important'
@@ -105,6 +105,7 @@ class SidebarHeader extends React.Component {
 
   flipSearch() {
     var flip = !this.state.searchSwitch;
+    console.log("search " + flip);
     this.setState({searchSwitch : flip});
   }
 
@@ -114,7 +115,7 @@ class SidebarHeader extends React.Component {
   }
 
   closeDialog() {
-    this.setState({enrollSwitch : false, createClassSwitch : false, createVideoSwitch : false, searchSwitch : false});
+    this.setState({enrollSwitch : false, createClassSwitch : false, createVideoSwitch : false});
   }
 
 
@@ -190,7 +191,7 @@ class SidebarHeader extends React.Component {
 
     var suggestedID = (this.props.course && this.props.course.videos) ? (this.props.course.videos.length + 1) : 0;
 
-    var search = (this.state.searchSwitch) ?
+    var search = (this.state.searchSwitch || true) ?
       (<div style={styles.search}>
         <input
           style={styles.input}
@@ -200,12 +201,6 @@ class SidebarHeader extends React.Component {
         </input>
       </div>) :
       (<div style={styles.none}>
-        <input
-          style={styles.input}
-          placeholder={"Filter by"}
-          onChange={(e) => this.handleFilter(e)}
-          >
-        </input>
       </div>);
 
     var title = (this.props.course) ? this.props.course.title : '';

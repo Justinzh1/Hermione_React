@@ -32,7 +32,7 @@ var styles = {
     paddingLeft: '20px',
   },
   video: {
-    height: '510px',
+    height: '515px',
     overflow: 'scroll',
     width: '100%',
     display: "inline-block",

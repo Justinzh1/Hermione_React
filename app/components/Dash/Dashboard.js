@@ -118,8 +118,9 @@ class Dashboard extends React.Component {
   }
 
   setActiveVideo(x) {
+    this.setState({video: x});
     var video = this.getActiveVideo();
-    this.setState({video : x, videoContent : video, seek : 0});
+    this.setState({videoContent : video, seek : 0});
   }
 
   render() {
@@ -145,6 +146,7 @@ class Dashboard extends React.Component {
           course={course}
           courses={this.props.courses}
           setActiveCourse={(i) => this.setActiveCourse(i)}
+          setActiveVideo={(x) => this.setActiveVideo(x)}
           />
       </div>) :
       (<div></div>);

@@ -10,7 +10,7 @@ var injectTapEventPlugin = require("react-tap-event-plugin");
 injectTapEventPlugin();
 
 const ChildrenContainer = {
-  minHeight: 'calc(100vh - 180px)'
+  minHeight: 'calc(100vh - 84px)'
 }
 
 class App extends React.Component {
