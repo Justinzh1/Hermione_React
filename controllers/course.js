@@ -30,7 +30,7 @@ var User = require('../models/User');
  }
 
 
-/** 
+/**
  * POST /createClass
  * Creates a new class
  */
@@ -38,8 +38,9 @@ var User = require('../models/User');
 exports.createClass = function(req, res, next) {
 	Course.findOne(
 		{ $or: [
-			{ title: req.body.title, year: req.body.year }
-		]}, 
+			{ title: req.body.title, year: req.body.year },
+      { code: req.body.code }
+		]},
 		function(err, course) {
 		    if (course) {
 		    	return res.status(400).send({ msg: 'The class you are trying to correct already exists.' });
@@ -61,7 +62,7 @@ exports.createClass = function(req, res, next) {
   		});
 }
 
-/** 
+/**
  * POST /enroll
  * Enrolls in a Class
  */
@@ -83,14 +84,15 @@ exports.createClass = function(req, res, next) {
 	 			user.enrolled = [];
 	 		}
 	 		user.enrolled.push(req.body.code);
-	 		user.save();
+	 		user.save(function(err) {
+        res.send(({message: "Succesfully enrolled in class."}))
+      });
  		});
 
- 		res.send(200)
  	});
  }
 
-/** 
+/**
  * POST /video
  * Adds a new video to a class
  */
@@ -102,6 +104,7 @@ exports.createVideo = function(req, res, next) {
 				res.send(404);
 				return;
 			}
+      console.log("Course " + JSON.stringify(course));
 			course.videos.push({
 				title: req.body.video.title,
 				id: req.body.video.id,
@@ -112,7 +115,7 @@ exports.createVideo = function(req, res, next) {
 			});
 			course.save(function(err) {
 				if (err) throw err;
-				res.send({message: "Controller Succesfully added video."});
+				res.send({message: "Succesfully added video."});
 			});
 		});
 }

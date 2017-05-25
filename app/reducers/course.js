@@ -9,6 +9,10 @@ export default function getCourses(state = initialState, action, user) {
     state = Object.assign({}, initialState, state, { hydrated: true });
   }
   switch (action.type) {
+    case 'CLEAR_CLASS_MESSAGES':
+      return Object.assign({}, state, {
+        message: '',
+      })
     case 'GET_CLASSES_SUCCESS':
       return Object.assign({}, state, {
         token: action.token,

@@ -109,6 +109,8 @@ app.post('/createVideo', courseController.createVideo);
 
 // React server rendering
 app.use(function(req, res) {
+  global.navigator = global.navigator || {};
+  global.navigator.userAgent = req.headers['user-agent'] || 'all';
   var initialState = {
     auth: { token: req.cookies.token, user: req.user },
     messages: {}

@@ -203,9 +203,6 @@ function signIn({ token, user, window, interval, dispatch }) {
     cookie.save('token', token, { expires: moment().add(1, 'hour').toDate() });
     browserHistory.push('/');
 
-    console.log("USER " + JSON.stringify(user));
-    
-
     resolve({ window: window, interval: interval });
   });
 

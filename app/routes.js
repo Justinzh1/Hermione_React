@@ -12,6 +12,7 @@ import Forgot from './components/Account/Forgot';
 import Reset from './components/Account/Reset';
 
 import Dashboard from './components/Dashboard/Dashboard';
+import NewDashboard from './components/Dash/Dashboard';
 
 export default function getRoutes(store) {
   const ensureAuthenticated = (nextState, replace) => {
@@ -43,7 +44,7 @@ export default function getRoutes(store) {
       <Route path="/account" component={Profile} onEnter={ensureAuthenticated} onLeave={clearMessages} home={false}/>
       <Route path="/forgot" component={Forgot} onEnter={skipIfAuthenticated} onLeave={clearMessages} home={false}/>
       <Route path='/reset/:token' component={Reset} onEnter={skipIfAuthenticated} onLeave={clearMessages} home={false}/>
-      <Route path="/dashboard" onEnter={ensureAuthenticated} component={Dashboard} onLeave={clearMessages} home={false}/>
+      <Route path="/dashboard" onEnter={ensureAuthenticated} component={NewDashboard} onLeave={clearMessages} home={false}/>
       <Route path="*" component={NotFound} onLeave={clearMessages} home={false}/>
     </Route>
   );
