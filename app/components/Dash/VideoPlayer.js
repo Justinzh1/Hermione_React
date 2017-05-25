@@ -8,6 +8,9 @@ import screenfull from 'screenfull'
 import ReactPlayer from 'react-player'
 
 import PlayerControls from './PlayerControls';
+import PlayerInfo from './PlayerInfo';
+import KeyConcepts from './KeyConcepts';
+import PlayerToggles from './PlayerToggles';
 
 const mapStateToProps = (state) => {
   return {
@@ -25,7 +28,10 @@ var styles = {
 }
 
 const youtubeConfig = {
-  preloading: true
+  preloading: true,
+  playerVars: {
+    enablejsapi: 1
+  }
 }
 
 class VideoPlayer extends React.Component {
@@ -33,6 +39,7 @@ class VideoPlayer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      toggled: false,
       infoSwitch: 1,
       ccSwitch: 0,
       boardSwitch: 0,
@@ -44,7 +51,7 @@ class VideoPlayer extends React.Component {
       loaded: 0,
       duration: 0,
       seeking: 0,
-      playbackRate: 1.0
+      playbackRate: 1.0,
     }
   }
 
@@ -156,6 +163,7 @@ class VideoPlayer extends React.Component {
             onProgress={this.onProgress}
             onDuration={duration => this.setState({ duration })}
             youtubeConfig={youtubeConfig}
+            controls={true}
             />
         </div>
         <PlayerControls
@@ -164,6 +172,18 @@ class VideoPlayer extends React.Component {
           flipCc={() => this.flipCc()}
           flipBoard={() => this.flipBoard()}
           flipTime={() => this.flipTime()}
+          />
+        <PlayerToggles
+          video={this.props.video}
+          caption={this.state.ccSwitch}
+          timeline={this.state.timeSwitch}
+          blackboard={this.state.boardSwitch}
+          />
+        <PlayerInfo 
+          video={this.props.video}
+          />
+        <KeyConcepts
+          timestamps={(this.props.video) ? this.props.video.timestamps : []}
           />
       </div>
     );

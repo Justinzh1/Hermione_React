@@ -100,7 +100,7 @@ class Dashboard extends React.Component {
   setActiveCourse(x) {
     console.log(x);
     var course = this.props.courses[x];
-    this.setState({active : x, course: course});
+    this.setState({active : x, course: course, video: -1});
     
   }
 
@@ -108,7 +108,7 @@ class Dashboard extends React.Component {
     var course = this.getActiveCourse();
     this.state.seek = 0;
     if (course) {
-      var index = (this.state.video == -1) ? course.videos.length - 1 : this.state.video - 1;
+      var index = (this.state.video == -1) ? course.videos.length - 1 : this.state.video;
       var video = course.videos[index];
       if (video) {
         return video;
@@ -120,6 +120,7 @@ class Dashboard extends React.Component {
   setActiveVideo(x) {
     this.setState({video: x});
     var video = this.getActiveVideo();
+    console.log("x " + x + " " + video.title);
     this.setState({videoContent : video, seek : 0});
   }
 

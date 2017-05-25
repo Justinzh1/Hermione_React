@@ -7,6 +7,7 @@ var courseSchema = new mongoose.Schema({
     professors: [String],
     videos: [{
         title: String,
+        description: String,
         id: Number,
         url: String,
         date: Date,

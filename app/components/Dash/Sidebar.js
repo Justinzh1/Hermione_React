@@ -89,6 +89,7 @@ class Sidebar extends React.Component {
   }
 
   setActive(id) {
+    console.log("active " + id);
     this.props.setActiveVideo(id - 1);
     this.setState({active : id});
   }
@@ -114,7 +115,7 @@ class Sidebar extends React.Component {
           <ListItem
             color="white"
             leftAvatar={icon}
-            primaryText={<div style={styles.title}> {v.title} </div>}
+            primaryText={<div style={styles.title}> {v.id} {v.title} </div>}
             secondaryText={<p style={styles.time}>{d}</p>}
             key={index}
             id={v.id}
